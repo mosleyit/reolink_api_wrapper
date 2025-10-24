@@ -94,9 +94,59 @@ Each language directory contains ready-to-use example code. See the README in ea
 - H.264
 - H.265
 
-## Documentation
+## 📚 Interactive Documentation
 
-### OpenAPI Specification
+### 🌐 View Online (Recommended)
+
+**Live Documentation:** https://mosleyit.github.io/reolink_api_wrapper/
+
+The documentation is hosted on GitHub Pages with three viewing options:
+
+1. **[Swagger UI](https://mosleyit.github.io/reolink_api_wrapper/swagger-ui.html)** - Interactive API explorer with "Try it out" functionality
+   - Test API endpoints directly from your browser
+   - See request/response examples
+   - Generate code snippets in multiple languages
+
+2. **[Redoc](https://mosleyit.github.io/reolink_api_wrapper/redoc.html)** - Beautiful three-panel documentation
+   - Clean, responsive design
+   - Perfect for reading and understanding the API
+   - Search functionality
+
+3. **[Download OpenAPI YAML](https://mosleyit.github.io/reolink_api_wrapper/reolink-camera-api-openapi.yaml)** - Raw specification file
+   - Use with your own tools
+   - Generate clients in any language
+   - Import into Postman, Insomnia, etc.
+
+### 💻 View Locally
+
+You can also run the documentation locally:
+
+#### Option 1: Simple HTTP Server
+
+```bash
+# Python 3
+cd docs
+python -m http.server 8000
+
+# Then open http://localhost:8000 in your browser
+```
+
+#### Option 2: Using Redoc CLI
+
+```bash
+npx @redocly/cli preview-docs docs/reolink-camera-api-openapi.yaml
+```
+
+#### Option 3: Using Swagger UI (Docker)
+
+```bash
+docker run -p 8080:8080 -e SWAGGER_JSON=/docs/reolink-camera-api-openapi.yaml \
+  -v $(pwd)/docs:/docs swaggerapi/swagger-ui
+
+# Then open http://localhost:8080
+```
+
+### 📖 OpenAPI Specification
 
 The [`docs/reolink-camera-api-openapi.yaml`](docs/reolink-camera-api-openapi.yaml) file contains:
 
@@ -107,21 +157,6 @@ The [`docs/reolink-camera-api-openapi.yaml`](docs/reolink-camera-api-openapi.yam
 - **Error codes** (-1 to -507) categorized
 - **V20 enhanced commands** with schedule tables
 - **Streaming protocol details** (RTSP, RTMP, FLV)
-
-### Interactive Documentation
-
-View the API documentation in your browser:
-
-```bash
-# Using Redoc (recommended)
-npx @redocly/cli preview-docs docs/reolink-camera-api-openapi.yaml
-
-# Using Swagger UI
-docker run -p 8080:8080 -e SWAGGER_JSON=/docs/reolink-camera-api-openapi.yaml \
-  -v $(pwd)/docs:/docs swaggerapi/swagger-ui
-```
-
-Then open http://localhost:8080 in your browser.
 
 ## Language-Specific Examples
 
@@ -284,19 +319,47 @@ Configurable detection zones using grid tables:
 - Auto, Stop, Patrol, Preset
 - And more...
 
-## Statistics
+## 🔧 Using with Popular Tools
+
+### Postman
+
+1. Open Postman
+2. Click **Import**
+3. Select **Link** and paste: `https://mosleyit.github.io/reolink_api_wrapper/reolink-camera-api-openapi.yaml`
+4. Postman will create a collection with all endpoints
+
+### Insomnia
+
+1. Open Insomnia
+2. Click **Create** → **Import From** → **URL**
+3. Paste: `https://mosleyit.github.io/reolink_api_wrapper/reolink-camera-api-openapi.yaml`
+4. All endpoints will be imported
+
+### VS Code (REST Client Extension)
+
+1. Install the REST Client extension
+2. Create a `.http` file
+3. Use the OpenAPI spec as reference for endpoints
+
+### Paw / RapidAPI
+
+Import the OpenAPI YAML file directly into these tools for a complete API client.
+
+## 📊 Statistics
 
 - **Total Endpoints**: 110+
 - **Total Lines (OpenAPI)**: 8,898
 - **Error Codes Documented**: 50+
 - **Command Categories**: 10+
 - **Completeness**: 100%
+- **Languages Supported**: Python, Go, JavaScript/TypeScript, Java
 
-## Version
+## 📌 Version
 
 - **API Version**: 8
 - **Documentation Date**: 2023-4
 - **OpenAPI Version**: 3.0.3
+- **Documentation URL**: https://mosleyit.github.io/reolink_api_wrapper/
 
 ## License
 
