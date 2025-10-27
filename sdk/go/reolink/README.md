@@ -91,8 +91,17 @@ func main() {
 
 ## Documentation
 
+### 📚 API Reference
+
+- 🔷 **[pkg.go.dev](https://pkg.go.dev/github.com/mosleyit/reolink_api_wrapper/sdk/go/reolink)** - Official Go documentation with full API reference
+- 📄 **[Static HTML Docs](https://mosleyit.github.io/reolink_api_wrapper/sdk-docs.html)** - Self-hosted documentation on GitHub Pages
+- 🌐 **[Documentation Hub](https://mosleyit.github.io/reolink_api_wrapper/godoc.html)** - Choose your preferred documentation format
+
+### 💡 Examples & Guides
+
 - 💡 **[Examples](examples/)** - Complete usage examples for all major features
 - 📖 **[OpenAPI Spec](../../../docs/reolink-camera-api-openapi.yaml)** - Complete API specification
+- 🎯 **[Interactive API Docs](https://mosleyit.github.io/reolink_api_wrapper/)** - Swagger UI and Redoc
 
 ## API Modules
 

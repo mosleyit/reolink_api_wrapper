@@ -127,7 +127,7 @@ Use the OpenAPI specification to implement your own client, or see the [Go SDK e
 
 **Live Documentation:** https://mosleyit.github.io/reolink_api_wrapper/
 
-The documentation is hosted on GitHub Pages with three viewing options:
+The documentation is hosted on GitHub Pages with multiple viewing options:
 
 1. **[Swagger UI](https://mosleyit.github.io/reolink_api_wrapper/swagger-ui.html)** - Interactive API explorer with "Try it out" functionality
    - Test API endpoints directly from your browser
@@ -139,7 +139,12 @@ The documentation is hosted on GitHub Pages with three viewing options:
    - Perfect for reading and understanding the API
    - Search functionality
 
-3. **[Download OpenAPI YAML](https://mosleyit.github.io/reolink_api_wrapper/reolink-camera-api-openapi.yaml)** - Raw specification file
+3. **[Go SDK Documentation](https://mosleyit.github.io/reolink_api_wrapper/godoc.html)** - Complete Go SDK API reference
+   - Static HTML documentation
+   - Also available on [pkg.go.dev](https://pkg.go.dev/github.com/mosleyit/reolink_api_wrapper/sdk/go/reolink)
+   - Full type definitions and examples
+
+4. **[Download OpenAPI YAML](https://mosleyit.github.io/reolink_api_wrapper/reolink-camera-api-openapi.yaml)** - Raw specification file
    - Use with your own tools
    - Generate clients in any language
    - Import into Postman, Insomnia, etc.

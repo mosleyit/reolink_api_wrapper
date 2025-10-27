@@ -269,6 +269,8 @@ To create a new example:
 ## Additional Resources
 
 - **[Main README](../README.md)** - SDK overview and features
+- **[pkg.go.dev](https://pkg.go.dev/github.com/mosleyit/reolink_api_wrapper/sdk/go/reolink)** - Complete API reference
+- **[GitHub Pages Docs](https://mosleyit.github.io/reolink_api_wrapper/godoc.html)** - Documentation hub
 - **[OpenAPI Spec](../../../../docs/reolink-camera-api-openapi.yaml)** - Complete API specification
 
 ## Support
