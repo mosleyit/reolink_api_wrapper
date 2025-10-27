@@ -255,13 +255,13 @@ To create a new example:
 2. Create `main.go` with your code
 3. Add module dependency:
    ```go
-   import "github.com/mosleyit/reolink_api_wrapper/sdk/go/reolink"
+   import "github.com/mosleyit/reolink_api_wrapper"
    ```
 4. Build and run:
    ```bash
    cd my_example
    go mod init my_example
-   go mod edit -replace github.com/mosleyit/reolink_api_wrapper/sdk/go/reolink=../..
+   go mod edit -replace github.com/mosleyit/reolink_api_wrapper=../..
    go mod tidy
    go run main.go
    ```
@@ -269,9 +269,9 @@ To create a new example:
 ## Additional Resources
 
 - **[Main README](../README.md)** - SDK overview and features
-- **[pkg.go.dev](https://pkg.go.dev/github.com/mosleyit/reolink_api_wrapper/sdk/go/reolink)** - Complete API reference
-- **[GitHub Pages Docs](https://mosleyit.github.io/reolink_api_wrapper/godoc.html)** - Documentation hub
-- **[OpenAPI Spec](../../../../docs/reolink-camera-api-openapi.yaml)** - Complete API specification
+- **[pkg.go.dev](https://pkg.go.dev/github.com/mosleyit/reolink_api_wrapper)** - Complete API reference
+- **[GitHub Pages Docs](https://mosleyit.github.io/reolink_api_wrapper/)** - Documentation hub
+- **[OpenAPI Spec](../docs/reolink-camera-api-openapi.yaml)** - Complete API specification
 
 ## Support
 

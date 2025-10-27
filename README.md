@@ -19,7 +19,7 @@ Production-ready Go SDK for the Reolink Camera HTTP API with 100% API coverage.
 ## Installation
 
 ```bash
-go get github.com/mosleyit/reolink_api_wrapper@v2
+go get github.com/mosleyit/reolink_api_wrapper
 ```
 
 ## Quick Start
@@ -248,4 +248,3 @@ See [CHANGELOG.md](CHANGELOG.md) for version history and migration guides.
 ## Related Projects
 
 - **OpenAPI Specification**: Complete API documentation in [`docs/`](docs/)
-- **Legacy SDK**: Previous version available in [`sdk/go/reolink/`](sdk/go/reolink/) (deprecated)

@@ -36,8 +36,7 @@ jobs:
           go install github.com/princjef/gomarkdoc/cmd/gomarkdoc@latest
 
           # Generate markdown documentation
-          cd sdk/go/reolink
-          gomarkdoc --output ../../../docs/SDK_API.md ./...
+          gomarkdoc --output docs/SDK_API.md ./...
 
       - name: Convert Markdown to HTML
         run: |
@@ -108,7 +107,7 @@ jobs:
             </div>
             <div class="nav">
               <a href="/">← Back to Docs</a>
-              <a href="https://pkg.go.dev/github.com/mosleyit/reolink_api_wrapper/sdk/go/reolink" target="_blank">View on pkg.go.dev →</a>
+              <a href="https://pkg.go.dev/github.com/mosleyit/reolink_api_wrapper" target="_blank">View on pkg.go.dev →</a>
               <a href="https://github.com/mosleyit/reolink_api_wrapper" target="_blank">GitHub</a>
             </div>
             <div class="container">
@@ -124,7 +123,7 @@ jobs:
                   document.getElementById('content').innerHTML = marked.parse(text);
                 })
                 .catch(err => {
-                  document.getElementById('content').innerHTML = '<p>Error loading documentation. Please visit <a href="https://pkg.go.dev/github.com/mosleyit/reolink_api_wrapper/sdk/go/reolink">pkg.go.dev</a> instead.</p>';
+                  document.getElementById('content').innerHTML = '<p>Error loading documentation. Please visit <a href="https://pkg.go.dev/github.com/mosleyit/reolink_api_wrapper">pkg.go.dev</a> instead.</p>';
                 });
             </script>
           </body>
@@ -253,7 +252,7 @@ jobs:
 
               <div style="margin-top: 30px;">
                 <a href="sdk-docs.html" class="btn">Static HTML Docs</a>
-                <a href="https://pkg.go.dev/github.com/mosleyit/reolink_api_wrapper/sdk/go/reolink" class="btn">pkg.go.dev</a>
+                <a href="https://pkg.go.dev/github.com/mosleyit/reolink_api_wrapper" class="btn">pkg.go.dev</a>
                 <a href="/" class="btn btn-secondary">← Back to Docs</a>
               </div>
             </div>

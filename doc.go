@@ -5,7 +5,7 @@
 //
 // # Installation
 //
-//	go get github.com/mosleyit/reolink_api_wrapper@v2
+//	go get github.com/mosleyit/reolink_api_wrapper
 //
 // # Quick Start
 //
