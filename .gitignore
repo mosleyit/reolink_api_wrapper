@@ -20,3 +20,8 @@ coverage.txt
 coverage.html
 *.prof
 vendor/
+
+# Example binaries
+examples/basic/basic
+examples/debug_test/debug_test
+examples/hardware_test/hardware_test

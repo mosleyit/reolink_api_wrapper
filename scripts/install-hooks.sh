@@ -1,5 +1,5 @@
 #!/bin/bash
-# Install git hooks for the Reolink API Wrapper project
+# Install git hooks for the Reolink Go SDK project
 
 set -e
 
@@ -12,15 +12,12 @@ echo "Installing git hooks..."
 # Create pre-commit hook
 cat > "$HOOKS_DIR/pre-commit" << 'EOF'
 #!/bin/bash
-# Pre-commit hook for Reolink API Wrapper
+# Pre-commit hook for Reolink Go SDK
 # This hook runs formatting and linting checks before allowing a commit
 
 set -e
 
 echo "Running pre-commit checks..."
-
-# Change to the Go SDK directory
-cd sdk/go/reolink
 
 # Run formatting
 echo "1. Formatting code..."
@@ -56,4 +53,3 @@ chmod +x "$HOOKS_DIR/pre-commit"
 echo "✓ Git hooks installed successfully!"
 echo ""
 echo "To skip hooks for a specific commit, use: git commit --no-verify"
-
