@@ -25,6 +25,242 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+
+      - name: Generate GoDoc with gomarkdoc
+        run: |
+          # Install gomarkdoc for markdown generation
+          go install github.com/princjef/gomarkdoc/cmd/gomarkdoc@latest
+
+          # Generate markdown documentation
+          cd sdk/go/reolink
+          gomarkdoc --output ../../../docs/SDK_API.md ./...
+
+      - name: Convert Markdown to HTML
+        run: |
+          # Create a nice HTML page from the markdown
+          cat > docs/sdk-docs.html << 'HTMLEOF'
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <title>Reolink Go SDK - API Reference</title>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.2.0/github-markdown.min.css">
+            <style>
+              body {
+                margin: 0;
+                padding: 0;
+                background: #f6f8fa;
+              }
+              .header {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                padding: 2rem;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+              }
+              .header h1 {
+                margin: 0;
+                font-size: 2rem;
+              }
+              .header p {
+                margin: 0.5rem 0 0 0;
+                opacity: 0.9;
+              }
+              .nav {
+                background: white;
+                padding: 1rem 2rem;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+                display: flex;
+                gap: 1rem;
+              }
+              .nav a {
+                color: #667eea;
+                text-decoration: none;
+                font-weight: 600;
+              }
+              .nav a:hover {
+                text-decoration: underline;
+              }
+              .container {
+                max-width: 1200px;
+                margin: 2rem auto;
+                padding: 0 2rem;
+              }
+              .markdown-body {
+                background: white;
+                padding: 3rem;
+                border-radius: 8px;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+              }
+              .markdown-body pre {
+                background: #f6f8fa;
+              }
+            </style>
+          </head>
+          <body>
+            <div class="header">
+              <h1>🔷 Reolink Go SDK - API Reference</h1>
+              <p>Complete API documentation for the Reolink Camera Go SDK</p>
+            </div>
+            <div class="nav">
+              <a href="/">← Back to Docs</a>
+              <a href="https://pkg.go.dev/github.com/mosleyit/reolink_api_wrapper/sdk/go/reolink" target="_blank">View on pkg.go.dev →</a>
+              <a href="https://github.com/mosleyit/reolink_api_wrapper" target="_blank">GitHub</a>
+            </div>
+            <div class="container">
+              <div class="markdown-body" id="content">
+                <p>Loading documentation...</p>
+              </div>
+            </div>
+            <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+            <script>
+              fetch('SDK_API.md')
+                .then(response => response.text())
+                .then(text => {
+                  document.getElementById('content').innerHTML = marked.parse(text);
+                })
+                .catch(err => {
+                  document.getElementById('content').innerHTML = '<p>Error loading documentation. Please visit <a href="https://pkg.go.dev/github.com/mosleyit/reolink_api_wrapper/sdk/go/reolink">pkg.go.dev</a> instead.</p>';
+                });
+            </script>
+          </body>
+          </html>
+          HTMLEOF
+
+      - name: Create GoDoc landing page
+        run: |
+          cat > docs/godoc.html << 'EOF'
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <title>Reolink Go SDK - API Documentation</title>
+            <style>
+              * { margin: 0; padding: 0; box-sizing: border-box; }
+              body {
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 20px;
+              }
+              .container {
+                background: white;
+                border-radius: 12px;
+                box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+                max-width: 600px;
+                padding: 60px 40px;
+                text-align: center;
+              }
+              .logo {
+                width: 80px;
+                height: 80px;
+                margin: 0 auto 30px;
+                background: #00ADD8;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 40px;
+                color: white;
+              }
+              h1 {
+                color: #1a202c;
+                font-size: 32px;
+                margin-bottom: 16px;
+                font-weight: 700;
+              }
+              .subtitle {
+                color: #718096;
+                font-size: 18px;
+                margin-bottom: 40px;
+              }
+              .redirect-msg {
+                background: #f7fafc;
+                border-left: 4px solid #00ADD8;
+                padding: 20px;
+                margin-bottom: 30px;
+                text-align: left;
+                border-radius: 4px;
+              }
+              .redirect-msg p {
+                color: #4a5568;
+                line-height: 1.6;
+              }
+              a {
+                color: #00ADD8;
+                text-decoration: none;
+                font-weight: 600;
+              }
+              a:hover {
+                text-decoration: underline;
+              }
+              .btn {
+                display: inline-block;
+                background: #00ADD8;
+                color: white;
+                padding: 14px 32px;
+                border-radius: 6px;
+                font-weight: 600;
+                font-size: 16px;
+                transition: all 0.3s ease;
+                margin: 10px;
+              }
+              .btn:hover {
+                background: #0099c0;
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(0,173,216,0.4);
+                text-decoration: none;
+              }
+              .btn-secondary {
+                background: #667eea;
+              }
+              .btn-secondary:hover {
+                background: #5568d3;
+              }
+              .spinner {
+                border: 3px solid #f3f3f3;
+                border-top: 3px solid #00ADD8;
+                border-radius: 50%;
+                width: 40px;
+                height: 40px;
+                animation: spin 1s linear infinite;
+                margin: 20px auto;
+              }
+              @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+              }
+            </style>
+          </head>
+          <body>
+            <div class="container">
+              <div class="logo">📚</div>
+              <h1>Reolink Go SDK</h1>
+              <p class="subtitle">API Documentation</p>
+
+              <div class="redirect-msg">
+                <p><strong>Choose your documentation format:</strong></p>
+                <p style="margin-top: 10px;">View the SDK documentation in your preferred format - static HTML hosted here or the official pkg.go.dev site.</p>
+              </div>
+
+              <div style="margin-top: 30px;">
+                <a href="sdk-docs.html" class="btn">Static HTML Docs</a>
+                <a href="https://pkg.go.dev/github.com/mosleyit/reolink_api_wrapper/sdk/go/reolink" class="btn">pkg.go.dev</a>
+                <a href="/" class="btn btn-secondary">← Back to Docs</a>
+              </div>
+            </div>
+          </body>
+          </html>
+          EOF
+
       - name: Setup Pages
         uses: actions/configure-pages@v4
 

@@ -213,8 +213,8 @@
                     <span>Complete Coverage</span>
                 </div>
                 <div class="stat">
-                    <span class="stat-number">4</span>
-                    <span>Languages Supported</span>
+                    <span class="stat-number">Go SDK</span>
+                    <span>Production Ready</span>
                 </div>
             </div>
         </div>
@@ -235,6 +235,13 @@
                     <h2>Redoc</h2>
                     <p>Beautiful, responsive API documentation with three-panel design. Perfect for reading and understanding the API.</p>
                     <a href="redoc.html" class="btn">Open Redoc →</a>
+                </div>
+
+                <div class="card" onclick="window.location.href='godoc.html'">
+                    <div class="card-icon">🔷</div>
+                    <h2>Go SDK Docs</h2>
+                    <p>Complete Go SDK documentation with examples, type definitions, and API reference on pkg.go.dev.</p>
+                    <a href="godoc.html" class="btn">View Go Docs →</a>
                 </div>
 
                 <div class="card" onclick="window.location.href='reolink-camera-api-openapi.yaml'">
@@ -286,17 +293,23 @@
             <div class="features">
                 <h2>🚀 Quick Start</h2>
                 <p style="color: #4a5568; line-height: 1.8; margin-bottom: 1rem;">
-                    Generate a client in your favorite language using OpenAPI Generator:
+                    <strong>Option 1: Use the Production-Ready Go SDK</strong>
+                </p>
+                <div style="background: #2d3748; color: #e2e8f0; padding: 1.5rem; border-radius: 8px; font-family: 'Courier New', monospace; overflow-x: auto; margin-bottom: 1.5rem;">
+                    <div style="color: #9ae6b4;">go get github.com/mosleyit/reolink_api_wrapper/sdk/go/reolink</div>
+                </div>
+                <p style="color: #4a5568; line-height: 1.8; margin-bottom: 1rem;">
+                    <strong>Option 2: Generate a client in your language using OpenAPI Generator</strong>
                 </p>
                 <div style="background: #2d3748; color: #e2e8f0; padding: 1.5rem; border-radius: 8px; font-family: 'Courier New', monospace; overflow-x: auto;">
                     <div style="margin-bottom: 1rem;"># Python</div>
                     <div style="color: #9ae6b4;">openapi-generator-cli generate -i reolink-camera-api-openapi.yaml -g python -o ./client</div>
                     <br>
-                    <div style="margin-bottom: 1rem;"># Go</div>
-                    <div style="color: #9ae6b4;">openapi-generator-cli generate -i reolink-camera-api-openapi.yaml -g go -o ./client</div>
-                    <br>
                     <div style="margin-bottom: 1rem;"># TypeScript</div>
                     <div style="color: #9ae6b4;">openapi-generator-cli generate -i reolink-camera-api-openapi.yaml -g typescript-axios -o ./client</div>
+                    <br>
+                    <div style="margin-bottom: 1rem;"># Java</div>
+                    <div style="color: #9ae6b4;">openapi-generator-cli generate -i reolink-camera-api-openapi.yaml -g java -o ./client</div>
                 </div>
             </div>
         </div>

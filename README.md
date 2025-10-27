@@ -182,6 +182,8 @@ openapi-generator-cli generate -i docs/reolink-camera-api-openapi.yaml -g java -
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
+Use the OpenAPI specification to implement your own client, or see the [examples/](examples/) for reference implementations.
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
