@@ -1,7 +1,6 @@
 package reolink
 
 import (
-	"context"
 	"encoding/json"
 	"errors"
 	"net/http"
@@ -97,7 +96,7 @@ func TestLogin(t *testing.T) {
 	client.baseURL = server.URL // Override baseURL for testing
 
 	// Test login
-	ctx := context.Background()
+	ctx := t.Context()
 	err := client.Login(ctx)
 	if err != nil {
 		t.Fatalf("Login failed: %v", err)
@@ -167,7 +166,7 @@ func TestLoginError(t *testing.T) {
 		WithCredentials("admin", "wrong"))
 	client.baseURL = server.URL
 
-	ctx := context.Background()
+	ctx := t.Context()
 	err := client.Login(ctx)
 	if err == nil {
 		t.Fatal("expected login to fail")
@@ -199,7 +198,7 @@ func TestLogout(t *testing.T) {
 	client.baseURL = server.URL
 	client.SetToken("test-token")
 
-	ctx := context.Background()
+	ctx := t.Context()
 	err := client.Logout(ctx)
 	if err != nil {
 		t.Fatalf("Logout failed: %v", err)

@@ -1,7 +1,6 @@
 package reolink
 
 import (
-	"context"
 	"encoding/json"
 	"net/http"
 	"net/http/httptest"
@@ -41,7 +40,7 @@ func TestAlarmAPI_GetMdState(t *testing.T) {
 	client.Alarm = &AlarmAPI{client: client}
 
 	// Test GetMdState
-	ctx := context.Background()
+	ctx := t.Context()
 	state, err := client.Alarm.GetMdState(ctx, 0)
 	if err != nil {
 		t.Fatalf("GetMdState failed: %v", err)
@@ -140,7 +139,7 @@ func TestAlarmAPI_GetMdAlarm(t *testing.T) {
 	client.Alarm = &AlarmAPI{client: client}
 
 	// Test GetMdAlarm
-	ctx := context.Background()
+	ctx := t.Context()
 	mdAlarm, err := client.Alarm.GetMdAlarm(ctx, 0)
 	if err != nil {
 		t.Fatalf("GetMdAlarm failed: %v", err)
@@ -209,7 +208,7 @@ func TestAlarmAPI_SetMdAlarm(t *testing.T) {
 	client.Alarm = &AlarmAPI{client: client}
 
 	// Test SetMdAlarm
-	ctx := context.Background()
+	ctx := t.Context()
 	gridSize := 60 * 33
 	config := MdAlarm{
 		Channel: 0,
@@ -270,7 +269,7 @@ func TestAlarmAPI_AudioAlarmPlay(t *testing.T) {
 	client.Alarm = &AlarmAPI{client: client}
 
 	// Test AudioAlarmPlay
-	ctx := context.Background()
+	ctx := t.Context()
 	err := client.Alarm.AudioAlarmPlay(ctx, AudioAlarmPlayParam{
 		Channel:      0,
 		AlarmMode:    "manul",
@@ -332,7 +331,7 @@ func TestAlarmAPI_GetAlarm(t *testing.T) {
 	client.Alarm = &AlarmAPI{client: client}
 
 	// Test GetAlarm
-	ctx := context.Background()
+	ctx := t.Context()
 	alarm, err := client.Alarm.GetAlarm(ctx, 0, "md")
 	if err != nil {
 		t.Fatalf("GetAlarm failed: %v", err)
@@ -379,7 +378,7 @@ func TestAlarmAPI_SetAlarm(t *testing.T) {
 	client.Alarm = &AlarmAPI{client: client}
 
 	// Test SetAlarm
-	ctx := context.Background()
+	ctx := t.Context()
 	err := client.Alarm.SetAlarm(ctx, Alarm{
 		Channel: 0,
 		Type:    "md",
@@ -430,7 +429,7 @@ func TestAlarmAPI_GetAudioAlarm(t *testing.T) {
 	client.Alarm = &AlarmAPI{client: client}
 
 	// Test GetAudioAlarm
-	ctx := context.Background()
+	ctx := t.Context()
 	audioAlarm, err := client.Alarm.GetAudioAlarm(ctx, 0)
 	if err != nil {
 		t.Fatalf("GetAudioAlarm failed: %v", err)
@@ -477,7 +476,7 @@ func TestAlarmAPI_SetAudioAlarm(t *testing.T) {
 	client.Alarm = &AlarmAPI{client: client}
 
 	// Test SetAudioAlarm
-	ctx := context.Background()
+	ctx := t.Context()
 	err := client.Alarm.SetAudioAlarm(ctx, AudioAlarm{
 		Channel:     0,
 		Enable:      1,
@@ -529,7 +528,7 @@ func TestAlarmAPI_GetBuzzerAlarmV20(t *testing.T) {
 	client.Alarm = &AlarmAPI{client: client}
 
 	// Test GetBuzzerAlarmV20
-	ctx := context.Background()
+	ctx := t.Context()
 	buzzerAlarm, err := client.Alarm.GetBuzzerAlarmV20(ctx, 0)
 	if err != nil {
 		t.Fatalf("GetBuzzerAlarmV20 failed: %v", err)
@@ -573,7 +572,7 @@ func TestAlarmAPI_SetBuzzerAlarmV20(t *testing.T) {
 	client.Alarm = &AlarmAPI{client: client}
 
 	// Test SetBuzzerAlarmV20
-	ctx := context.Background()
+	ctx := t.Context()
 	err := client.Alarm.SetBuzzerAlarmV20(ctx, BuzzerAlarm{
 		Channel: 0,
 		Enable:  1,
@@ -619,7 +618,7 @@ func TestAlarmAPI_GetAudioAlarmV20(t *testing.T) {
 	client.Alarm = &AlarmAPI{client: client}
 
 	// Test GetAudioAlarmV20
-	ctx := context.Background()
+	ctx := t.Context()
 	audioAlarm, err := client.Alarm.GetAudioAlarmV20(ctx, 0)
 	if err != nil {
 		t.Fatalf("GetAudioAlarmV20 failed: %v", err)
@@ -667,7 +666,7 @@ func TestAlarmAPI_SetAudioAlarmV20(t *testing.T) {
 	client.Alarm = &AlarmAPI{client: client}
 
 	// Test SetAudioAlarmV20
-	ctx := context.Background()
+	ctx := t.Context()
 	err := client.Alarm.SetAudioAlarmV20(ctx, AudioAlarm{
 		Channel:     0,
 		Enable:      1,

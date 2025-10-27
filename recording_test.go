@@ -1,7 +1,6 @@
 package reolink
 
 import (
-	"context"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -35,7 +34,7 @@ func TestRecordingAPI_GetRec(t *testing.T) {
 	client.baseURL = server.URL
 	client.token = "test-token"
 
-	ctx := context.Background()
+	ctx := t.Context()
 	rec, err := client.Recording.GetRec(ctx, 0)
 	if err != nil {
 		t.Fatalf("GetRec failed: %v", err)
@@ -66,7 +65,7 @@ func TestRecordingAPI_SetRec(t *testing.T) {
 	client.baseURL = server.URL
 	client.token = "test-token"
 
-	ctx := context.Background()
+	ctx := t.Context()
 	rec := Rec{
 		Channel:   0,
 		Overwrite: 1,
@@ -116,7 +115,7 @@ func TestRecordingAPI_GetRecV20(t *testing.T) {
 	client.baseURL = server.URL
 	client.token = "test-token"
 
-	ctx := context.Background()
+	ctx := t.Context()
 	rec, err := client.Recording.GetRecV20(ctx, 0)
 	if err != nil {
 		t.Fatalf("GetRecV20 failed: %v", err)
@@ -147,7 +146,7 @@ func TestRecordingAPI_SetRecV20(t *testing.T) {
 	client.baseURL = server.URL
 	client.token = "test-token"
 
-	ctx := context.Background()
+	ctx := t.Context()
 	rec := Rec{
 		Channel:   0,
 		Overwrite: 1,
@@ -197,7 +196,7 @@ func TestRecordingAPI_Search(t *testing.T) {
 	client.baseURL = server.URL
 	client.token = "test-token"
 
-	ctx := context.Background()
+	ctx := t.Context()
 	startTime := time.Date(2020, 12, 21, 12, 0, 0, 0, time.UTC)
 	endTime := time.Date(2020, 12, 21, 13, 0, 0, 0, time.UTC)
 
@@ -255,7 +254,7 @@ func TestRecordingAPI_NvrDownload(t *testing.T) {
 	client.baseURL = server.URL
 	client.token = "test-token"
 
-	ctx := context.Background()
+	ctx := t.Context()
 	params := map[string]interface{}{
 		"channel": 0,
 		"source":  "test.mp4",

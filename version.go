@@ -7,4 +7,3 @@ const Version = "2.0.0"
 func UserAgent() string {
 	return "reolink-go-sdk/" + Version
 }
-

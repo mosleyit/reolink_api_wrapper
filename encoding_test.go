@@ -1,7 +1,6 @@
 package reolink
 
 import (
-	"context"
 	"encoding/json"
 	"net/http"
 	"net/http/httptest"
@@ -72,7 +71,7 @@ func TestEncodingAPI_GetEnc(t *testing.T) {
 	client.Encoding = &EncodingAPI{client: client}
 
 	// Test GetEnc
-	ctx := context.Background()
+	ctx := t.Context()
 	config, err := client.Encoding.GetEnc(ctx, 0)
 	if err != nil {
 		t.Fatalf("GetEnc failed: %v", err)
@@ -129,7 +128,7 @@ func TestEncodingAPI_SetEnc(t *testing.T) {
 	client.Encoding = &EncodingAPI{client: client}
 
 	// Test SetEnc
-	ctx := context.Background()
+	ctx := t.Context()
 	config := EncConfig{
 		Channel: 0,
 		Audio:   0,
@@ -186,7 +185,7 @@ func TestEncodingAPI_Snap(t *testing.T) {
 	client.Encoding = &EncodingAPI{client: client}
 
 	// Test Snap
-	ctx := context.Background()
+	ctx := t.Context()
 	imageData, err := client.Encoding.Snap(ctx, 0)
 	if err != nil {
 		t.Fatalf("Snap failed: %v", err)
@@ -215,7 +214,7 @@ func TestEncodingAPI_Snap_Error(t *testing.T) {
 	client.Encoding = &EncodingAPI{client: client}
 
 	// Test Snap with error
-	ctx := context.Background()
+	ctx := t.Context()
 	_, err := client.Encoding.Snap(ctx, 0)
 	if err == nil {
 		t.Fatal("Expected error, got nil")

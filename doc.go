@@ -200,4 +200,3 @@
 //
 // MIT License - see LICENSE file for details
 package reolink
-

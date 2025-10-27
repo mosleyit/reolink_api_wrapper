@@ -1,7 +1,6 @@
 package reolink
 
 import (
-	"context"
 	"encoding/json"
 	"net/http"
 	"net/http/httptest"
@@ -35,7 +34,7 @@ func TestSecurityAPI_GetUsers(t *testing.T) {
 	client := NewClient(server.URL[7:])
 	client.baseURL = server.URL
 
-	ctx := context.Background()
+	ctx := t.Context()
 	users, err := client.Security.GetUsers(ctx)
 	if err != nil {
 		t.Fatalf("GetUsers failed: %v", err)
@@ -76,7 +75,7 @@ func TestSecurityAPI_AddUser(t *testing.T) {
 	client := NewClient(server.URL[7:])
 	client.baseURL = server.URL
 
-	ctx := context.Background()
+	ctx := t.Context()
 	user := User{
 		UserName: "newuser",
 		Password: "password123",
@@ -110,7 +109,7 @@ func TestSecurityAPI_ModifyUser(t *testing.T) {
 	client := NewClient(server.URL[7:])
 	client.baseURL = server.URL
 
-	ctx := context.Background()
+	ctx := t.Context()
 	user := User{
 		UserName: "existinguser",
 		Password: "newpassword",
@@ -144,7 +143,7 @@ func TestSecurityAPI_DeleteUser(t *testing.T) {
 	client := NewClient(server.URL[7:])
 	client.baseURL = server.URL
 
-	ctx := context.Background()
+	ctx := t.Context()
 	err := client.Security.DeleteUser(ctx, "userToDelete")
 	if err != nil {
 		t.Fatalf("DeleteUser failed: %v", err)
@@ -177,7 +176,7 @@ func TestSecurityAPI_GetOnlineUsers(t *testing.T) {
 	client := NewClient(server.URL[7:])
 	client.baseURL = server.URL
 
-	ctx := context.Background()
+	ctx := t.Context()
 	users, err := client.Security.GetOnlineUsers(ctx)
 	if err != nil {
 		t.Fatalf("GetOnlineUsers failed: %v", err)
@@ -218,7 +217,7 @@ func TestSecurityAPI_DisconnectUser(t *testing.T) {
 	client := NewClient(server.URL[7:])
 	client.baseURL = server.URL
 
-	ctx := context.Background()
+	ctx := t.Context()
 	err := client.Security.DisconnectUser(ctx, "userToDisconnect")
 	if err != nil {
 		t.Fatalf("DisconnectUser failed: %v", err)
@@ -247,7 +246,7 @@ func TestSecurityAPI_GetCertificateInfo(t *testing.T) {
 	client := NewClient(server.URL[7:])
 	client.baseURL = server.URL
 
-	ctx := context.Background()
+	ctx := t.Context()
 	certInfo, err := client.Security.GetCertificateInfo(ctx)
 	if err != nil {
 		t.Fatalf("GetCertificateInfo failed: %v", err)
@@ -283,7 +282,7 @@ func TestSecurityAPI_CertificateClear(t *testing.T) {
 	client := NewClient(server.URL[7:])
 	client.baseURL = server.URL
 
-	ctx := context.Background()
+	ctx := t.Context()
 	err := client.Security.CertificateClear(ctx)
 	if err != nil {
 		t.Fatalf("CertificateClear failed: %v", err)
@@ -313,7 +312,7 @@ func TestSecurityAPI_GetSysCfg(t *testing.T) {
 	client := NewClient(server.URL[7:])
 	client.baseURL = server.URL
 
-	ctx := context.Background()
+	ctx := t.Context()
 	config, err := client.Security.GetSysCfg(ctx, 0)
 	if err != nil {
 		t.Fatalf("GetSysCfg failed: %v", err)
@@ -357,7 +356,7 @@ func TestSecurityAPI_SetSysCfg(t *testing.T) {
 	client := NewClient(server.URL[7:])
 	client.baseURL = server.URL
 
-	ctx := context.Background()
+	ctx := t.Context()
 	config := map[string]interface{}{
 		"version":    "1.0",
 		"deviceName": "TestCamera",

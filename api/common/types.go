@@ -69,4 +69,3 @@ type Stream struct {
 	Width     int    `json:"width"`     // Video width in pixels
 	Profile   string `json:"profile"`   // H.264/H.265 profile (Base, Main, High)
 }
-

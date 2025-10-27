@@ -67,7 +67,7 @@ func TestErrorPaths_EmptyResponse(t *testing.T) {
 			defer server.Close()
 
 			client := newTestClient(server)
-			ctx := context.Background()
+			ctx := t.Context()
 
 			err := tt.fn(client, ctx)
 			if err == nil {
@@ -149,7 +149,7 @@ func TestErrorPaths_APIError(t *testing.T) {
 			defer server.Close()
 
 			client := newTestClient(server)
-			ctx := context.Background()
+			ctx := t.Context()
 
 			err := tt.fn(client, ctx)
 			if err == nil {
@@ -228,7 +228,7 @@ func TestErrorPaths_InvalidJSON(t *testing.T) {
 			defer server.Close()
 
 			client := newTestClient(server)
-			ctx := context.Background()
+			ctx := t.Context()
 
 			err := tt.fn(client, ctx)
 			if err == nil {
@@ -275,7 +275,7 @@ func TestErrorPaths_NetworkError(t *testing.T) {
 
 			client := NewClient("invalid-host:9999")
 			client.baseURL = "http://invalid-host:9999"
-			ctx := context.Background()
+			ctx := t.Context()
 
 			err := tt.fn(client, ctx)
 			if err == nil {
@@ -332,7 +332,7 @@ func TestErrorPaths_SetOperations(t *testing.T) {
 			defer server.Close()
 
 			client := newTestClient(server)
-			ctx := context.Background()
+			ctx := t.Context()
 
 			err := tt.fn(client, ctx)
 			if err == nil {
@@ -356,7 +356,7 @@ func TestErrorPaths_SetOperations(t *testing.T) {
 			defer server.Close()
 
 			client := newTestClient(server)
-			ctx := context.Background()
+			ctx := t.Context()
 
 			err := tt.fn(client, ctx)
 			if err == nil {
@@ -410,7 +410,7 @@ func TestErrorPaths_DestructiveOperations(t *testing.T) {
 			defer server.Close()
 
 			client := newTestClient(server)
-			ctx := context.Background()
+			ctx := t.Context()
 
 			err := tt.fn(client, ctx)
 			if err == nil {

@@ -1,7 +1,6 @@
 package reolink
 
 import (
-	"context"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -19,7 +18,7 @@ func TestNetworkAPI_GetNetPort(t *testing.T) {
 	client.baseURL = server.URL
 	client.token = "test-token"
 
-	ctx := context.Background()
+	ctx := t.Context()
 	netPort, err := client.Network.GetNetPort(ctx)
 	if err != nil {
 		t.Fatalf("GetNetPort failed: %v", err)
@@ -45,7 +44,7 @@ func TestNetworkAPI_SetNetPort(t *testing.T) {
 	client.baseURL = server.URL
 	client.token = "test-token"
 
-	ctx := context.Background()
+	ctx := t.Context()
 	netPort := NetPort{
 		HTTPPort:  80,
 		HTTPSPort: 443,
@@ -73,7 +72,7 @@ func TestNetworkAPI_GetLocalLink(t *testing.T) {
 	client.baseURL = server.URL
 	client.token = "test-token"
 
-	ctx := context.Background()
+	ctx := t.Context()
 	localLink, err := client.Network.GetLocalLink(ctx)
 	if err != nil {
 		t.Fatalf("GetLocalLink failed: %v", err)
@@ -99,7 +98,7 @@ func TestNetworkAPI_GetNtp(t *testing.T) {
 	client.baseURL = server.URL
 	client.token = "test-token"
 
-	ctx := context.Background()
+	ctx := t.Context()
 	ntp, err := client.Network.GetNtp(ctx)
 	if err != nil {
 		t.Fatalf("GetNtp failed: %v", err)
@@ -125,7 +124,7 @@ func TestNetworkAPI_GetWifi(t *testing.T) {
 	client.baseURL = server.URL
 	client.token = "test-token"
 
-	ctx := context.Background()
+	ctx := t.Context()
 	wifi, err := client.Network.GetWifi(ctx)
 	if err != nil {
 		t.Fatalf("GetWifi failed: %v", err)
@@ -151,7 +150,7 @@ func TestNetworkAPI_GetDdns(t *testing.T) {
 	client.baseURL = server.URL
 	client.token = "test-token"
 
-	ctx := context.Background()
+	ctx := t.Context()
 	ddns, err := client.Network.GetDdns(ctx)
 	if err != nil {
 		t.Fatalf("GetDdns failed: %v", err)
@@ -177,7 +176,7 @@ func TestNetworkAPI_GetEmail(t *testing.T) {
 	client.baseURL = server.URL
 	client.token = "test-token"
 
-	ctx := context.Background()
+	ctx := t.Context()
 	email, err := client.Network.GetEmail(ctx)
 	if err != nil {
 		t.Fatalf("GetEmail failed: %v", err)
@@ -206,7 +205,7 @@ func TestNetworkAPI_GetFtp(t *testing.T) {
 	client.baseURL = server.URL
 	client.token = "test-token"
 
-	ctx := context.Background()
+	ctx := t.Context()
 	ftp, err := client.Network.GetFtp(ctx)
 	if err != nil {
 		t.Fatalf("GetFtp failed: %v", err)
@@ -235,7 +234,7 @@ func TestNetworkAPI_GetPush(t *testing.T) {
 	client.baseURL = server.URL
 	client.token = "test-token"
 
-	ctx := context.Background()
+	ctx := t.Context()
 	push, err := client.Network.GetPush(ctx)
 	if err != nil {
 		t.Fatalf("GetPush failed: %v", err)
@@ -258,7 +257,7 @@ func TestNetworkAPI_GetP2p(t *testing.T) {
 	client.baseURL = server.URL
 	client.token = "test-token"
 
-	ctx := context.Background()
+	ctx := t.Context()
 	p2p, err := client.Network.GetP2p(ctx)
 	if err != nil {
 		t.Fatalf("GetP2p failed: %v", err)
@@ -284,7 +283,7 @@ func TestNetworkAPI_GetUpnp(t *testing.T) {
 	client.baseURL = server.URL
 	client.token = "test-token"
 
-	ctx := context.Background()
+	ctx := t.Context()
 	upnp, err := client.Network.GetUpnp(ctx)
 	if err != nil {
 		t.Fatalf("GetUpnp failed: %v", err)
@@ -307,7 +306,7 @@ func TestNetworkAPI_TestEmail(t *testing.T) {
 	client.baseURL = server.URL
 	client.token = "test-token"
 
-	ctx := context.Background()
+	ctx := t.Context()
 	err := client.Network.TestEmail(ctx)
 	if err != nil {
 		t.Fatalf("TestEmail failed: %v", err)
@@ -326,7 +325,7 @@ func TestNetworkAPI_TestFtp(t *testing.T) {
 	client.baseURL = server.URL
 	client.token = "test-token"
 
-	ctx := context.Background()
+	ctx := t.Context()
 	err := client.Network.TestFtp(ctx)
 	if err != nil {
 		t.Fatalf("TestFtp failed: %v", err)
@@ -345,7 +344,7 @@ func TestNetworkAPI_ScanWifi(t *testing.T) {
 	client.baseURL = server.URL
 	client.token = "test-token"
 
-	ctx := context.Background()
+	ctx := t.Context()
 	networks, err := client.Network.ScanWifi(ctx)
 	if err != nil {
 		t.Fatalf("ScanWifi failed: %v", err)
@@ -375,7 +374,7 @@ func TestNetworkAPI_GetWifiSignal(t *testing.T) {
 	client.baseURL = server.URL
 	client.token = "test-token"
 
-	ctx := context.Background()
+	ctx := t.Context()
 	signal, err := client.Network.GetWifiSignal(ctx)
 	if err != nil {
 		t.Fatalf("GetWifiSignal failed: %v", err)
@@ -398,7 +397,7 @@ func TestNetworkAPI_GetEmailV20(t *testing.T) {
 	client.baseURL = server.URL
 	client.token = "test-token"
 
-	ctx := context.Background()
+	ctx := t.Context()
 	email, err := client.Network.GetEmailV20(ctx, 0)
 	if err != nil {
 		t.Fatalf("GetEmailV20 failed: %v", err)
@@ -424,7 +423,7 @@ func TestNetworkAPI_SetEmailV20(t *testing.T) {
 	client.baseURL = server.URL
 	client.token = "test-token"
 
-	ctx := context.Background()
+	ctx := t.Context()
 	email := Email{
 		SMTPServer: "smtp.gmail.com",
 		SMTPPort:   465,
@@ -452,7 +451,7 @@ func TestNetworkAPI_GetFtpV20(t *testing.T) {
 	client.baseURL = server.URL
 	client.token = "test-token"
 
-	ctx := context.Background()
+	ctx := t.Context()
 	ftp, err := client.Network.GetFtpV20(ctx, 0)
 	if err != nil {
 		t.Fatalf("GetFtpV20 failed: %v", err)
@@ -478,7 +477,7 @@ func TestNetworkAPI_SetFtpV20(t *testing.T) {
 	client.baseURL = server.URL
 	client.token = "test-token"
 
-	ctx := context.Background()
+	ctx := t.Context()
 	ftp := Ftp{
 		Server:   "ftp.example.com",
 		Port:     21,
@@ -506,7 +505,7 @@ func TestNetworkAPI_GetPushV20(t *testing.T) {
 	client.baseURL = server.URL
 	client.token = "test-token"
 
-	ctx := context.Background()
+	ctx := t.Context()
 	push, err := client.Network.GetPushV20(ctx, 0)
 	if err != nil {
 		t.Fatalf("GetPushV20 failed: %v", err)
@@ -529,7 +528,7 @@ func TestNetworkAPI_SetPushV20(t *testing.T) {
 	client.baseURL = server.URL
 	client.token = "test-token"
 
-	ctx := context.Background()
+	ctx := t.Context()
 	push := Push{
 		Schedule: PushSchedule{
 			Enable: 1,
@@ -554,7 +553,7 @@ func TestNetworkAPI_GetPushCfg(t *testing.T) {
 	client.baseURL = server.URL
 	client.token = "test-token"
 
-	ctx := context.Background()
+	ctx := t.Context()
 	pushCfg, err := client.Network.GetPushCfg(ctx)
 	if err != nil {
 		t.Fatalf("GetPushCfg failed: %v", err)
@@ -580,7 +579,7 @@ func TestNetworkAPI_SetPushCfg(t *testing.T) {
 	client.baseURL = server.URL
 	client.token = "test-token"
 
-	ctx := context.Background()
+	ctx := t.Context()
 	pushCfg := PushCfg{
 		Enable: 1,
 		Token:  "test-push-token",
@@ -604,7 +603,7 @@ func TestNetworkAPI_TestWifi(t *testing.T) {
 	client.baseURL = server.URL
 	client.token = "test-token"
 
-	ctx := context.Background()
+	ctx := t.Context()
 	err := client.Network.TestWifi(ctx)
 	if err != nil {
 		t.Fatalf("TestWifi failed: %v", err)
@@ -623,7 +622,7 @@ func TestNetworkAPI_GetRtspUrl(t *testing.T) {
 	client.baseURL = server.URL
 	client.token = "test-token"
 
-	ctx := context.Background()
+	ctx := t.Context()
 	rtspUrl, err := client.Network.GetRtspUrl(ctx, 1)
 	if err != nil {
 		t.Fatalf("GetRtspUrl failed: %v", err)
@@ -652,7 +651,7 @@ func TestNetworkAPI_SetLocalLink(t *testing.T) {
 	client.baseURL = server.URL
 	client.token = "test-token"
 
-	ctx := context.Background()
+	ctx := t.Context()
 	localLink := LocalLink{
 		Type: "Static",
 		Static: StaticIP{
@@ -685,7 +684,7 @@ func TestNetworkAPI_SetNtp(t *testing.T) {
 	client.baseURL = server.URL
 	client.token = "test-token"
 
-	ctx := context.Background()
+	ctx := t.Context()
 	ntp := Ntp{
 		Enable:   1,
 		Interval: 720,
@@ -711,7 +710,7 @@ func TestNetworkAPI_SetWifi(t *testing.T) {
 	client.baseURL = server.URL
 	client.token = "test-token"
 
-	ctx := context.Background()
+	ctx := t.Context()
 	wifi := Wifi{
 		SSID:     "TestNetwork",
 		Password: "testpassword",
@@ -735,7 +734,7 @@ func TestNetworkAPI_SetDdns(t *testing.T) {
 	client.baseURL = server.URL
 	client.token = "test-token"
 
-	ctx := context.Background()
+	ctx := t.Context()
 	ddns := Ddns{
 		Enable: 1,
 		Type:   "NO-IP",
@@ -759,7 +758,7 @@ func TestNetworkAPI_SetEmail(t *testing.T) {
 	client.baseURL = server.URL
 	client.token = "test-token"
 
-	ctx := context.Background()
+	ctx := t.Context()
 	email := Email{
 		SMTPServer: "smtp.gmail.com",
 	}
@@ -782,7 +781,7 @@ func TestNetworkAPI_SetFtp(t *testing.T) {
 	client.baseURL = server.URL
 	client.token = "test-token"
 
-	ctx := context.Background()
+	ctx := t.Context()
 	ftp := Ftp{
 		Server: "ftp.example.com",
 	}
@@ -805,7 +804,7 @@ func TestNetworkAPI_SetPush(t *testing.T) {
 	client.baseURL = server.URL
 	client.token = "test-token"
 
-	ctx := context.Background()
+	ctx := t.Context()
 	push := Push{
 		Schedule: PushSchedule{
 			Enable: 1,
@@ -830,7 +829,7 @@ func TestNetworkAPI_SetP2p(t *testing.T) {
 	client.baseURL = server.URL
 	client.token = "test-token"
 
-	ctx := context.Background()
+	ctx := t.Context()
 	p2p := P2p{
 		Enable: 1,
 	}
@@ -853,7 +852,7 @@ func TestNetworkAPI_SetUpnp(t *testing.T) {
 	client.baseURL = server.URL
 	client.token = "test-token"
 
-	ctx := context.Background()
+	ctx := t.Context()
 	upnp := Upnp{
 		Enable: 1,
 	}

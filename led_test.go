@@ -1,7 +1,6 @@
 package reolink
 
 import (
-	"context"
 	"encoding/json"
 	"net/http"
 	"net/http/httptest"
@@ -42,7 +41,7 @@ func TestLEDAPI_GetIrLights(t *testing.T) {
 	client.LED = &LEDAPI{client: client}
 
 	// Test GetIrLights
-	ctx := context.Background()
+	ctx := t.Context()
 	irLights, err := client.LED.GetIrLights(ctx)
 	if err != nil {
 		t.Fatalf("GetIrLights failed: %v", err)
@@ -84,7 +83,7 @@ func TestLEDAPI_SetIrLights(t *testing.T) {
 	client.LED = &LEDAPI{client: client}
 
 	// Test SetIrLights
-	ctx := context.Background()
+	ctx := t.Context()
 	err := client.LED.SetIrLights(ctx, 0, LEDStateOn)
 	if err != nil {
 		t.Fatalf("SetIrLights failed: %v", err)
@@ -125,7 +124,7 @@ func TestLEDAPI_GetPowerLed(t *testing.T) {
 	client.LED = &LEDAPI{client: client}
 
 	// Test GetPowerLed
-	ctx := context.Background()
+	ctx := t.Context()
 	powerLed, err := client.LED.GetPowerLed(ctx, 0)
 	if err != nil {
 		t.Fatalf("GetPowerLed failed: %v", err)
@@ -167,7 +166,7 @@ func TestLEDAPI_SetPowerLed(t *testing.T) {
 	client.LED = &LEDAPI{client: client}
 
 	// Test SetPowerLed
-	ctx := context.Background()
+	ctx := t.Context()
 	err := client.LED.SetPowerLed(ctx, 0, LEDStateOff)
 	if err != nil {
 		t.Fatalf("SetPowerLed failed: %v", err)
@@ -223,7 +222,7 @@ func TestLEDAPI_GetWhiteLed(t *testing.T) {
 	client.LED = &LEDAPI{client: client}
 
 	// Test GetWhiteLed
-	ctx := context.Background()
+	ctx := t.Context()
 	whiteLed, err := client.LED.GetWhiteLed(ctx, 0)
 	if err != nil {
 		t.Fatalf("GetWhiteLed failed: %v", err)
@@ -277,7 +276,7 @@ func TestLEDAPI_SetWhiteLed(t *testing.T) {
 	client.LED = &LEDAPI{client: client}
 
 	// Test SetWhiteLed
-	ctx := context.Background()
+	ctx := t.Context()
 	config := WhiteLed{
 		Channel: 0,
 		State:   1,
@@ -346,7 +345,7 @@ func TestLEDAPI_GetAiAlarm(t *testing.T) {
 	client.LED = &LEDAPI{client: client}
 
 	// Test GetAiAlarm
-	ctx := context.Background()
+	ctx := t.Context()
 	aiAlarm, err := client.LED.GetAiAlarm(ctx, 0, "people")
 	if err != nil {
 		t.Fatalf("GetAiAlarm failed: %v", err)
@@ -393,7 +392,7 @@ func TestLEDAPI_SetAiAlarm(t *testing.T) {
 	client.LED = &LEDAPI{client: client}
 
 	// Test SetAiAlarm
-	ctx := context.Background()
+	ctx := t.Context()
 	alarm := AiAlarm{
 		AiType:          "people",
 		Sensitivity:     10,
@@ -444,7 +443,7 @@ func TestLEDAPI_SetAlarmArea(t *testing.T) {
 	client.LED = &LEDAPI{client: client}
 
 	// Test SetAlarmArea
-	ctx := context.Background()
+	ctx := t.Context()
 	params := map[string]interface{}{
 		"channel": 0,
 		"area":    "test_area",

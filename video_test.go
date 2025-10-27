@@ -1,7 +1,6 @@
 package reolink
 
 import (
-	"context"
 	"encoding/json"
 	"net/http"
 	"net/http/httptest"
@@ -20,7 +19,7 @@ func TestVideoAPI_GetOsd(t *testing.T) {
 	client.baseURL = server.URL
 	client.token = "test-token"
 
-	ctx := context.Background()
+	ctx := t.Context()
 	osd, err := client.Video.GetOsd(ctx, 0)
 	if err != nil {
 		t.Fatalf("GetOsd failed: %v", err)
@@ -52,7 +51,7 @@ func TestVideoAPI_SetOsd(t *testing.T) {
 	client.baseURL = server.URL
 	client.token = "test-token"
 
-	ctx := context.Background()
+	ctx := t.Context()
 	osd := Osd{
 		Channel: 0,
 		BgColor: 0,
@@ -86,7 +85,7 @@ func TestVideoAPI_GetImage(t *testing.T) {
 	client.baseURL = server.URL
 	client.token = "test-token"
 
-	ctx := context.Background()
+	ctx := t.Context()
 	image, err := client.Video.GetImage(ctx, 0)
 	if err != nil {
 		t.Fatalf("GetImage failed: %v", err)
@@ -124,7 +123,7 @@ func TestVideoAPI_SetImage(t *testing.T) {
 	client.baseURL = server.URL
 	client.token = "test-token"
 
-	ctx := context.Background()
+	ctx := t.Context()
 	image := Image{
 		Channel:    0,
 		Bright:     150,
@@ -152,7 +151,7 @@ func TestVideoAPI_GetIsp(t *testing.T) {
 	client.baseURL = server.URL
 	client.token = "test-token"
 
-	ctx := context.Background()
+	ctx := t.Context()
 	isp, err := client.Video.GetIsp(ctx, 0)
 	if err != nil {
 		t.Fatalf("GetIsp failed: %v", err)
@@ -190,7 +189,7 @@ func TestVideoAPI_SetIsp(t *testing.T) {
 	client.baseURL = server.URL
 	client.token = "test-token"
 
-	ctx := context.Background()
+	ctx := t.Context()
 	isp := Isp{
 		Channel:     0,
 		AntiFlicker: "Outdoor",
@@ -226,7 +225,7 @@ func TestVideoAPI_GetMask(t *testing.T) {
 	client.baseURL = server.URL
 	client.token = "test-token"
 
-	ctx := context.Background()
+	ctx := t.Context()
 	mask, err := client.Video.GetMask(ctx, 0)
 	if err != nil {
 		t.Fatalf("GetMask failed: %v", err)
@@ -261,7 +260,7 @@ func TestVideoAPI_SetMask(t *testing.T) {
 	client.baseURL = server.URL
 	client.token = "test-token"
 
-	ctx := context.Background()
+	ctx := t.Context()
 	mask := Mask{
 		Channel: 0,
 		Enable:  1,
@@ -311,7 +310,7 @@ func TestVideoAPI_GetCrop(t *testing.T) {
 	client := NewClient(server.URL[7:])
 	client.baseURL = server.URL
 
-	ctx := context.Background()
+	ctx := t.Context()
 	crop, err := client.Video.GetCrop(ctx, 0)
 	if err != nil {
 		t.Fatalf("GetCrop failed: %v", err)
@@ -356,7 +355,7 @@ func TestVideoAPI_SetCrop(t *testing.T) {
 	client := NewClient(server.URL[7:])
 	client.baseURL = server.URL
 
-	ctx := context.Background()
+	ctx := t.Context()
 	crop := Crop{
 		Channel:      0,
 		ScreenWidth:  2560,
@@ -395,7 +394,7 @@ func TestVideoAPI_GetStitch(t *testing.T) {
 	client := NewClient(server.URL[7:])
 	client.baseURL = server.URL
 
-	ctx := context.Background()
+	ctx := t.Context()
 	stitch, err := client.Video.GetStitch(ctx)
 	if err != nil {
 		t.Fatalf("GetStitch failed: %v", err)
@@ -428,7 +427,7 @@ func TestVideoAPI_SetStitch(t *testing.T) {
 	client := NewClient(server.URL[7:])
 	client.baseURL = server.URL
 
-	ctx := context.Background()
+	ctx := t.Context()
 	stitch := Stitch{
 		Distance:    8.1,
 		StitchXMove: 5,

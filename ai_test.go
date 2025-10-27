@@ -1,7 +1,6 @@
 package reolink
 
 import (
-	"context"
 	"encoding/json"
 	"net/http"
 	"net/http/httptest"
@@ -53,7 +52,7 @@ func TestAIAPI_GetAiCfg(t *testing.T) {
 	client.AI = &AIAPI{client: client}
 
 	// Test GetAiCfg
-	ctx := context.Background()
+	ctx := t.Context()
 	cfg, err := client.AI.GetAiCfg(ctx, 0)
 	if err != nil {
 		t.Fatalf("GetAiCfg failed: %v", err)
@@ -113,7 +112,7 @@ func TestAIAPI_SetAiCfg(t *testing.T) {
 	client.AI = &AIAPI{client: client}
 
 	// Test SetAiCfg
-	ctx := context.Background()
+	ctx := t.Context()
 	config := AiCfg{
 		Channel: 0,
 		AiTrack: 1,
@@ -185,7 +184,7 @@ func TestAIAPI_GetAiState(t *testing.T) {
 	client.AI = &AIAPI{client: client}
 
 	// Test GetAiState
-	ctx := context.Background()
+	ctx := t.Context()
 	state, err := client.AI.GetAiState(ctx, 0)
 	if err != nil {
 		t.Fatalf("GetAiState failed: %v", err)

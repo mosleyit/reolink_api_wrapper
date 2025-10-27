@@ -1,7 +1,6 @@
 package reolink
 
 import (
-	"context"
 	"encoding/json"
 	"net/http"
 	"net/http/httptest"
@@ -38,7 +37,7 @@ func TestPTZAPI_PtzCtrl(t *testing.T) {
 	client.PTZ = &PTZAPI{client: client}
 
 	// Test PtzCtrl
-	ctx := context.Background()
+	ctx := t.Context()
 	err := client.PTZ.PtzCtrl(ctx, PtzCtrlParam{
 		Channel: 0,
 		Op:      PTZOpLeft,
@@ -97,7 +96,7 @@ func TestPTZAPI_GetPtzPreset(t *testing.T) {
 	client.PTZ = &PTZAPI{client: client}
 
 	// Test GetPtzPreset
-	ctx := context.Background()
+	ctx := t.Context()
 	presets, err := client.PTZ.GetPtzPreset(ctx, 0)
 	if err != nil {
 		t.Fatalf("GetPtzPreset failed: %v", err)
@@ -148,7 +147,7 @@ func TestPTZAPI_SetPtzPreset(t *testing.T) {
 	client.PTZ = &PTZAPI{client: client}
 
 	// Test SetPtzPreset
-	ctx := context.Background()
+	ctx := t.Context()
 	err := client.PTZ.SetPtzPreset(ctx, PtzPreset{
 		Enable: 1,
 		ID:     1,
@@ -199,7 +198,7 @@ func TestPTZAPI_GetPtzPatrol(t *testing.T) {
 	client.PTZ = &PTZAPI{client: client}
 
 	// Test GetPtzPatrol
-	ctx := context.Background()
+	ctx := t.Context()
 	patrol, err := client.PTZ.GetPtzPatrol(ctx, 0)
 	if err != nil {
 		t.Fatalf("GetPtzPatrol failed: %v", err)
@@ -249,7 +248,7 @@ func TestPTZAPI_GetPtzGuard(t *testing.T) {
 	client.PTZ = &PTZAPI{client: client}
 
 	// Test GetPtzGuard
-	ctx := context.Background()
+	ctx := t.Context()
 	guard, err := client.PTZ.GetPtzGuard(ctx, 0)
 	if err != nil {
 		t.Fatalf("GetPtzGuard failed: %v", err)
@@ -299,7 +298,7 @@ func TestPTZAPI_GetPtzCheckState(t *testing.T) {
 	client.PTZ = &PTZAPI{client: client}
 
 	// Test GetPtzCheckState
-	ctx := context.Background()
+	ctx := t.Context()
 	state, err := client.PTZ.GetPtzCheckState(ctx, 0)
 	if err != nil {
 		t.Fatalf("GetPtzCheckState failed: %v", err)
@@ -340,7 +339,7 @@ func TestPTZAPI_PtzCheck(t *testing.T) {
 	client.PTZ = &PTZAPI{client: client}
 
 	// Test PtzCheck
-	ctx := context.Background()
+	ctx := t.Context()
 	err := client.PTZ.PtzCheck(ctx, 0)
 	if err != nil {
 		t.Fatalf("PtzCheck failed: %v", err)
@@ -383,7 +382,7 @@ func TestPTZAPI_GetZoomFocus(t *testing.T) {
 	client.PTZ = &PTZAPI{client: client}
 
 	// Test GetZoomFocus
-	ctx := context.Background()
+	ctx := t.Context()
 	zf, err := client.PTZ.GetZoomFocus(ctx, 0)
 	if err != nil {
 		t.Fatalf("GetZoomFocus failed: %v", err)
@@ -427,7 +426,7 @@ func TestPTZAPI_StartZoomFocus(t *testing.T) {
 	client.PTZ = &PTZAPI{client: client}
 
 	// Test StartZoomFocus
-	ctx := context.Background()
+	ctx := t.Context()
 	err := client.PTZ.StartZoomFocus(ctx, 0, PTZOpZoomInc, 0)
 	if err != nil {
 		t.Fatalf("StartZoomFocus failed: %v", err)
@@ -469,7 +468,7 @@ func TestPTZAPI_GetPtzTattern(t *testing.T) {
 	client.PTZ = &PTZAPI{client: client}
 
 	// Test GetPtzTattern
-	ctx := context.Background()
+	ctx := t.Context()
 	tattern, err := client.PTZ.GetPtzTattern(ctx, 0)
 	if err != nil {
 		t.Fatalf("GetPtzTattern failed: %v", err)
@@ -513,7 +512,7 @@ func TestPTZAPI_SetPtzTattern(t *testing.T) {
 	client.PTZ = &PTZAPI{client: client}
 
 	// Test SetPtzTattern
-	ctx := context.Background()
+	ctx := t.Context()
 	err := client.PTZ.SetPtzTattern(ctx, 0, PtzTattern{
 		Enable: 1,
 		ID:     1,
@@ -564,7 +563,7 @@ func TestPTZAPI_GetPtzSerial(t *testing.T) {
 	client.PTZ = &PTZAPI{client: client}
 
 	// Test GetPtzSerial
-	ctx := context.Background()
+	ctx := t.Context()
 	serial, err := client.PTZ.GetPtzSerial(ctx, 0)
 	if err != nil {
 		t.Fatalf("GetPtzSerial failed: %v", err)
@@ -608,7 +607,7 @@ func TestPTZAPI_SetPtzSerial(t *testing.T) {
 	client.PTZ = &PTZAPI{client: client}
 
 	// Test SetPtzSerial
-	ctx := context.Background()
+	ctx := t.Context()
 	err := client.PTZ.SetPtzSerial(ctx, PtzSerial{
 		Channel:      0,
 		BaudRate:     9600,
@@ -659,7 +658,7 @@ func TestPTZAPI_GetAutoFocus(t *testing.T) {
 	client.PTZ = &PTZAPI{client: client}
 
 	// Test GetAutoFocus
-	ctx := context.Background()
+	ctx := t.Context()
 	af, err := client.PTZ.GetAutoFocus(ctx, 0)
 	if err != nil {
 		t.Fatalf("GetAutoFocus failed: %v", err)
@@ -700,7 +699,7 @@ func TestPTZAPI_SetAutoFocus(t *testing.T) {
 	client.PTZ = &PTZAPI{client: client}
 
 	// Test SetAutoFocus
-	ctx := context.Background()
+	ctx := t.Context()
 	err := client.PTZ.SetAutoFocus(ctx, AutoFocus{
 		Channel: 0,
 		Disable: 0,
@@ -740,7 +739,7 @@ func TestPTZAPI_SetPtzPatrol(t *testing.T) {
 	client.PTZ = &PTZAPI{client: client}
 
 	// Test SetPtzPatrol
-	ctx := context.Background()
+	ctx := t.Context()
 	err := client.PTZ.SetPtzPatrol(ctx, PtzPatrol{
 		Channel: 0,
 	})
@@ -779,7 +778,7 @@ func TestPTZAPI_SetPtzGuard(t *testing.T) {
 	client.PTZ = &PTZAPI{client: client}
 
 	// Test SetPtzGuard
-	ctx := context.Background()
+	ctx := t.Context()
 	err := client.PTZ.SetPtzGuard(ctx, PtzGuard{
 		Channel: 0,
 		BEnable: 1,

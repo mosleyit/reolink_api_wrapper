@@ -1,7 +1,6 @@
 package reolink
 
 import (
-	"context"
 	"encoding/json"
 	"net/http"
 	"net/http/httptest"
@@ -42,7 +41,7 @@ func TestSystemAPI_GetDeviceInfo(t *testing.T) {
 	client := NewClient(server.URL[7:])
 	client.baseURL = server.URL
 
-	ctx := context.Background()
+	ctx := t.Context()
 	info, err := client.System.GetDeviceInfo(ctx)
 	if err != nil {
 		t.Fatalf("GetDeviceInfo failed: %v", err)
@@ -77,7 +76,7 @@ func TestSystemAPI_GetDeviceName(t *testing.T) {
 	client := NewClient(server.URL[7:])
 	client.baseURL = server.URL
 
-	ctx := context.Background()
+	ctx := t.Context()
 	name, err := client.System.GetDeviceName(ctx)
 	if err != nil {
 		t.Fatalf("GetDeviceName failed: %v", err)
@@ -110,7 +109,7 @@ func TestSystemAPI_SetDeviceName(t *testing.T) {
 	client := NewClient(server.URL[7:])
 	client.baseURL = server.URL
 
-	ctx := context.Background()
+	ctx := t.Context()
 	err := client.System.SetDeviceName(ctx, "New Camera Name")
 	if err != nil {
 		t.Fatalf("SetDeviceName failed: %v", err)
@@ -143,7 +142,7 @@ func TestSystemAPI_GetHddInfo(t *testing.T) {
 	client := NewClient(server.URL[7:])
 	client.baseURL = server.URL
 
-	ctx := context.Background()
+	ctx := t.Context()
 	hdds, err := client.System.GetHddInfo(ctx)
 	if err != nil {
 		t.Fatalf("GetHddInfo failed: %v", err)
@@ -184,7 +183,7 @@ func TestSystemAPI_Reboot(t *testing.T) {
 	client := NewClient(server.URL[7:])
 	client.baseURL = server.URL
 
-	ctx := context.Background()
+	ctx := t.Context()
 	err := client.System.Reboot(ctx)
 	if err != nil {
 		t.Fatalf("Reboot failed: %v", err)
@@ -217,7 +216,7 @@ func TestSystemAPI_GetTime(t *testing.T) {
 	client := NewClient(server.URL[7:])
 	client.baseURL = server.URL
 
-	ctx := context.Background()
+	ctx := t.Context()
 	timeConfig, err := client.System.GetTime(ctx)
 	if err != nil {
 		t.Fatalf("GetTime failed: %v", err)
@@ -253,7 +252,7 @@ func TestSystemAPI_SetTime(t *testing.T) {
 	client := NewClient(server.URL[7:])
 	client.baseURL = server.URL
 
-	ctx := context.Background()
+	ctx := t.Context()
 	timeConfig := &TimeConfig{
 		Year:       2024,
 		Mon:        10,
@@ -291,7 +290,7 @@ func TestSystemAPI_Format(t *testing.T) {
 	client := NewClient(server.URL[7:])
 	client.baseURL = server.URL
 
-	ctx := context.Background()
+	ctx := t.Context()
 	err := client.System.Format(ctx, 0)
 	if err != nil {
 		t.Fatalf("Format failed: %v", err)
@@ -320,7 +319,7 @@ func TestSystemAPI_Restore(t *testing.T) {
 	client := NewClient(server.URL[7:])
 	client.baseURL = server.URL
 
-	ctx := context.Background()
+	ctx := t.Context()
 	err := client.System.Restore(ctx)
 	if err != nil {
 		t.Fatalf("Restore failed: %v", err)
@@ -354,7 +353,7 @@ func TestSystemAPI_GetAbility(t *testing.T) {
 	client := NewClient(server.URL[7:])
 	client.baseURL = server.URL
 
-	ctx := context.Background()
+	ctx := t.Context()
 	ability, err := client.System.GetAbility(ctx)
 	if err != nil {
 		t.Fatalf("GetAbility failed: %v", err)
@@ -385,7 +384,7 @@ func TestSystemAPI_GetAutoUpgrade(t *testing.T) {
 	client := NewClient(server.URL[7:])
 	client.baseURL = server.URL
 
-	ctx := context.Background()
+	ctx := t.Context()
 	autoUpgrade, err := client.System.GetAutoUpgrade(ctx)
 	if err != nil {
 		t.Fatalf("GetAutoUpgrade failed: %v", err)
@@ -412,7 +411,7 @@ func TestSystemAPI_SetAutoUpgrade(t *testing.T) {
 	client := NewClient(server.URL[7:])
 	client.baseURL = server.URL
 
-	ctx := context.Background()
+	ctx := t.Context()
 	err := client.System.SetAutoUpgrade(ctx, true)
 	if err != nil {
 		t.Fatalf("SetAutoUpgrade failed: %v", err)
@@ -437,7 +436,7 @@ func TestSystemAPI_CheckFirmware(t *testing.T) {
 	client := NewClient(server.URL[7:])
 	client.baseURL = server.URL
 
-	ctx := context.Background()
+	ctx := t.Context()
 	check, err := client.System.CheckFirmware(ctx)
 	if err != nil {
 		t.Fatalf("CheckFirmware failed: %v", err)
@@ -464,7 +463,7 @@ func TestSystemAPI_UpgradeOnline(t *testing.T) {
 	client := NewClient(server.URL[7:])
 	client.baseURL = server.URL
 
-	ctx := context.Background()
+	ctx := t.Context()
 	err := client.System.UpgradeOnline(ctx)
 	if err != nil {
 		t.Fatalf("UpgradeOnline failed: %v", err)
@@ -492,7 +491,7 @@ func TestSystemAPI_UpgradeStatus(t *testing.T) {
 	client := NewClient(server.URL[7:])
 	client.baseURL = server.URL
 
-	ctx := context.Background()
+	ctx := t.Context()
 	status, err := client.System.UpgradeStatus(ctx)
 	if err != nil {
 		t.Fatalf("UpgradeStatus failed: %v", err)
@@ -522,7 +521,7 @@ func TestSystemAPI_UpgradePrepare(t *testing.T) {
 	client := NewClient(server.URL[7:])
 	client.baseURL = server.URL
 
-	ctx := context.Background()
+	ctx := t.Context()
 	err := client.System.UpgradePrepare(ctx, false, "firmware.pak")
 	if err != nil {
 		t.Fatalf("UpgradePrepare failed: %v", err)
@@ -558,7 +557,7 @@ func TestSystemAPI_GetSysCfg(t *testing.T) {
 	client := NewClient(server.URL[7:])
 	client.baseURL = server.URL
 
-	ctx := context.Background()
+	ctx := t.Context()
 	cfg, err := client.System.GetSysCfg(ctx)
 	if err != nil {
 		t.Fatalf("GetSysCfg failed: %v", err)
@@ -598,7 +597,7 @@ func TestSystemAPI_SetSysCfg(t *testing.T) {
 	client := NewClient(server.URL[7:])
 	client.baseURL = server.URL
 
-	ctx := context.Background()
+	ctx := t.Context()
 	err := client.System.SetSysCfg(ctx, SysCfg{
 		LockTime:     300,
 		AllowedTimes: 5,
@@ -612,7 +611,7 @@ func TestSystemAPI_SetSysCfg(t *testing.T) {
 func TestSystemAPI_Upgrade(t *testing.T) {
 	client := NewClient("192.168.1.100")
 
-	ctx := context.Background()
+	ctx := t.Context()
 	firmware := []byte("fake firmware data")
 
 	// This should return an error indicating it's not implemented
@@ -663,7 +662,7 @@ func TestSystemAPI_GetAutoMaint(t *testing.T) {
 	client := NewClient(server.URL[7:])
 	client.baseURL = server.URL
 
-	ctx := context.Background()
+	ctx := t.Context()
 	autoMaint, err := client.System.GetAutoMaint(ctx)
 	if err != nil {
 		t.Fatalf("GetAutoMaint failed: %v", err)
@@ -703,7 +702,7 @@ func TestSystemAPI_SetAutoMaint(t *testing.T) {
 	client := NewClient(server.URL[7:])
 	client.baseURL = server.URL
 
-	ctx := context.Background()
+	ctx := t.Context()
 	err := client.System.SetAutoMaint(ctx, AutoMaint{
 		Enable: 1,
 		Hour:   2,
@@ -743,7 +742,7 @@ func TestSystemAPI_GetChannelStatus(t *testing.T) {
 	client := NewClient(server.URL[7:])
 	client.baseURL = server.URL
 
-	ctx := context.Background()
+	ctx := t.Context()
 	channelStatus, err := client.System.GetChannelStatus(ctx)
 	if err != nil {
 		t.Fatalf("GetChannelStatus failed: %v", err)
