@@ -1,35 +1,28 @@
-# Reolink Camera API Documentation
+# Reolink Camera API - Go SDK
 
-Complete OpenAPI 3.0.3 specification for the Reolink Camera HTTP API (Version 8).
+[![Go Reference](https://pkg.go.dev/badge/github.com/mosleyit/reolink_api_wrapper.svg)](https://pkg.go.dev/github.com/mosleyit/reolink_api_wrapper)
+[![Go Report Card](https://goreportcard.com/badge/github.com/mosleyit/reolink_api_wrapper)](https://goreportcard.com/report/github.com/mosleyit/reolink_api_wrapper)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## Overview
+Production-ready Go SDK for the Reolink Camera HTTP API with 100% API coverage.
 
-This repository contains comprehensive API documentation for Reolink IP cameras, converted from the official PDF documentation into a structured OpenAPI specification format. It includes ready-to-use examples in multiple programming languages.
+## Features
 
-## Repository Structure
+- ✅ **100% API Coverage** - All 130 endpoints across 11 modules
+- ✅ **Type-Safe** - Comprehensive Go types for all API requests and responses
+- ✅ **Well-Tested** - 269 unit tests with 60% coverage
+- ✅ **Hardware-Validated** - Tested on real Reolink cameras
+- ✅ **Context-Aware** - Full context.Context support for timeouts and cancellation
+- ✅ **Production-Ready** - Used in production environments
+- ✅ **Comprehensive Documentation** - Complete API documentation and examples
 
-```
-reolink_api_wrapper/
-├── docs/                          # Documentation files
-│   ├── reolink-camera-api-openapi.yaml    # Complete OpenAPI 3.0.3 spec (8,898 lines)
-│   ├── api_guide.txt                       # Text conversion of PDF (20,717 lines)
-│   └── reolink-camera-http-api-user-guide-v8.pdf  # Original PDF
-├── sdk/                           # SDK implementations
-│   └── go/reolink/                # Production-ready Go SDK
-│       ├── README.md              # SDK documentation
-│       └── examples/              # Working Go examples
-└── README.md                      # This file
+## Installation
+
+```bash
+go get github.com/mosleyit/reolink_api_wrapper@v2
 ```
 
 ## Quick Start
-
-### Option 1: Use the Go SDK (Recommended)
-
-A production-ready Go SDK is available:
-
-```bash
-go get github.com/mosleyit/reolink_api_wrapper/sdk/go/reolink
-```
 
 ```go
 package main
@@ -38,19 +31,23 @@ import (
     "context"
     "fmt"
     "log"
-    "github.com/mosleyit/reolink_api_wrapper/sdk/go/reolink"
+
+    "github.com/mosleyit/reolink_api_wrapper"
 )
 
 func main() {
+    // Create client
     client := reolink.NewClient("192.168.1.100",
         reolink.WithCredentials("admin", "password"))
 
+    // Authenticate
     ctx := context.Background()
     if err := client.Login(ctx); err != nil {
         log.Fatal(err)
     }
     defer client.Logout(ctx)
 
+    // Get device information
     info, err := client.System.GetDeviceInfo(ctx)
     if err != nil {
         log.Fatal(err)
@@ -59,11 +56,116 @@ func main() {
 }
 ```
 
-See [sdk/go/reolink/README.md](sdk/go/reolink/README.md) for complete documentation.
+## API Modules
 
-### Option 2: Generate a Client from OpenAPI Spec
+The SDK is organized into 11 domain-specific modules:
 
-Use OpenAPI Generator to create a client in your language:
+| Module | Description | Endpoints |
+|--------|-------------|-----------|
+| **System** | Device info, time, maintenance, reboot, firmware | 15 |
+| **Security** | Users, authentication, certificates, sessions | 12 |
+| **Network** | Network config, WiFi, DDNS, NTP, Email, FTP, Push | 10 |
+| **Video** | OSD, image settings, ISP, privacy mask, crop | 13 |
+| **Encoding** | Stream configuration, snapshots, video encoding | 6 |
+| **Recording** | Recording config, search, download, playback | 10 |
+| **PTZ** | Pan/Tilt/Zoom control, presets, patrols, guard | 18 |
+| **Alarm** | Motion detection, AI alarms, audio alarms, buzzer | 24 |
+| **LED** | IR lights, white LED, power LED control | 6 |
+| **AI** | AI detection, auto-tracking, auto-focus | 13 |
+| **Streaming** | RTSP, RTMP, FLV URL helpers | 3 |
+
+## Examples
+
+See the [examples/](examples/) directory for complete working examples:
+
+- **[basic](examples/basic/)** - Simple example showing authentication and device info
+- **[debug_test](examples/debug_test/)** - Debug tool for testing API calls
+- **[hardware_test](examples/hardware_test/)** - Comprehensive hardware validation suite
+
+## Documentation
+
+- **[API Documentation](https://pkg.go.dev/github.com/mosleyit/reolink_api_wrapper)** - Complete Go package documentation
+- **[OpenAPI Spec](docs/reolink-camera-api-openapi.yaml)** - Full API specification (8,898 lines)
+- **[Online Docs](https://mosleyit.github.io/reolink_api_wrapper/)** - Interactive API documentation
+- **[CHANGELOG](CHANGELOG.md)** - Version history and migration guide
+
+## Repository Structure
+
+```
+reolink_api_wrapper/
+├── *.go                           # SDK source files (root package)
+├── *_test.go                      # Unit tests
+├── api/                           # API-specific packages
+│   └── common/                    # Shared types and utilities
+├── pkg/                           # Public packages
+│   └── logger/                    # Logger interface and implementations
+├── examples/                      # Ready-to-run examples
+│   ├── basic/                     # Simple usage example
+│   ├── debug_test/                # Debug tool
+│   └── hardware_test/             # Hardware validation
+├── docs/                          # Documentation files
+│   ├── reolink-camera-api-openapi.yaml    # OpenAPI 3.0.3 spec
+│   └── ...                        # Additional documentation
+├── LICENSE                        # MIT License
+├── CHANGELOG.md                   # Version history
+└── README.md                      # This file
+```
+
+## Configuration Options
+
+The client supports various configuration options:
+
+```go
+client := reolink.NewClient("192.168.1.100",
+    reolink.WithCredentials("admin", "password"),
+    reolink.WithHTTPS(true),
+    reolink.WithTimeout(30*time.Second),
+    reolink.WithLogger(myLogger),
+)
+```
+
+## Testing
+
+Run the test suite:
+
+```bash
+go test ./...
+```
+
+Run tests with coverage:
+
+```bash
+go test -cover ./...
+```
+
+## Hardware Compatibility
+
+The SDK has been tested and validated on real Reolink hardware:
+
+- Reolink IPC cameras (various models)
+- Reolink NVR systems
+- Firmware versions 8.x and later
+
+## OpenAPI Specification
+
+The complete API specification is available in [`docs/reolink-camera-api-openapi.yaml`](docs/reolink-camera-api-openapi.yaml):
+
+- **110+ API endpoints** fully documented
+- **Complete request/response schemas** with types and constraints
+- **Working examples** for every command
+- **Error codes** (-1 to -507) categorized
+- **Streaming protocol details** (RTSP, RTMP, FLV)
+
+### View Online
+
+**Live Documentation:** <https://mosleyit.github.io/reolink_api_wrapper/>
+
+- **[Swagger UI](https://mosleyit.github.io/reolink_api_wrapper/swagger-ui.html)** - Interactive API explorer
+- **[Redoc](https://mosleyit.github.io/reolink_api_wrapper/redoc.html)** - Beautiful documentation
+
+## Generate Clients in Other Languages
+
+Use OpenAPI Generator to create clients in your language:
 
 ```bash
 # Python
@@ -76,258 +178,30 @@ openapi-generator-cli generate -i docs/reolink-camera-api-openapi.yaml -g typesc
 openapi-generator-cli generate -i docs/reolink-camera-api-openapi.yaml -g java -o ./java-client
 ```
 
-### Option 3: Manual Implementation
+## Contributing
 
-Use the OpenAPI specification to implement your own client, or see the [Go SDK examples](sdk/go/reolink/examples/) for reference implementations.
-
-## Features
-
-### Complete API Coverage
-
-- **System Commands**: Login, Logout, GetDevInfo, Reboot, Upgrade, etc.
-- **Security Commands**: User management, password changes
-- **Network Commands**: DDNS, NTP, Network ports, WiFi, P2P, UPnP
-- **Video Input Commands**: OSD, ISP, Mask, Crop, Stitch
-- **Encoding Commands**: Stream configuration, resolution, bitrate
-- **Record Commands**: Recording schedules, playback
-- **PTZ Commands**: Pan/Tilt/Zoom control, presets, patrols, patterns
-- **Alarm Commands**: Motion detection, AI detection (people, vehicle, pets)
-- **LED Commands**: IR lights, white LED, power LED
-- **AI Commands**: AI detection configuration and state
-
-### OpenAPI Specification Highlights
-
-- **100% Self-Contained**: No need to reference the original PDF
-- **Production-Ready**: Generate API clients in any language
-- **IDE-Friendly**: Full autocomplete support with detailed schemas
-- **Comprehensive Examples**: Every command includes working examples
-- **Version Support**: Both standard and V20 enhanced commands
-- **Model-Specific Notes**: Special features for different camera models
-
-### Authentication Methods
-
-- **Token-based**: Long session (3600 second lease time)
-- **Basic Authentication**: Short session with credentials in URL
-
-### Supported Protocols
-
-- **HTTP API**: POST requests to `/cgi-bin/api.cgi`
-- **RTSP**: Real-Time Streaming Protocol
-- **RTMP**: Real-Time Messaging Protocol
-- **FLV**: Flash Video streaming
-
-### Video Codecs
-
-- H.264
-- H.265
-
-## 📚 Interactive Documentation
-
-### 🌐 View Online (Recommended)
-
-**Live Documentation:** https://mosleyit.github.io/reolink_api_wrapper/
-
-The documentation is hosted on GitHub Pages with three viewing options:
-
-1. **[Swagger UI](https://mosleyit.github.io/reolink_api_wrapper/swagger-ui.html)** - Interactive API explorer with "Try it out" functionality
-   - Test API endpoints directly from your browser
-   - See request/response examples
-   - Generate code snippets in multiple languages
-
-2. **[Redoc](https://mosleyit.github.io/reolink_api_wrapper/redoc.html)** - Beautiful three-panel documentation
-   - Clean, responsive design
-   - Perfect for reading and understanding the API
-   - Search functionality
-
-3. **[Download OpenAPI YAML](https://mosleyit.github.io/reolink_api_wrapper/reolink-camera-api-openapi.yaml)** - Raw specification file
-   - Use with your own tools
-   - Generate clients in any language
-   - Import into Postman, Insomnia, etc.
-
-### 💻 View Locally
-
-You can also run the documentation locally:
-
-#### Option 1: Simple HTTP Server
-
-```bash
-# Python 3
-cd docs
-python -m http.server 8000
-
-# Then open http://localhost:8000 in your browser
-```
-
-#### Option 2: Using Redoc CLI
-
-```bash
-npx @redocly/cli preview-docs docs/reolink-camera-api-openapi.yaml
-```
-
-#### Option 3: Using Swagger UI (Docker)
-
-```bash
-docker run -p 8080:8080 -e SWAGGER_JSON=/docs/reolink-camera-api-openapi.yaml \
-  -v $(pwd)/docs:/docs swaggerapi/swagger-ui
-
-# Then open http://localhost:8080
-```
-
-### 📖 OpenAPI Specification
-
-The [`docs/reolink-camera-api-openapi.yaml`](docs/reolink-camera-api-openapi.yaml) file contains:
-
-- **110+ API endpoints** fully documented
-- **Complete request/response schemas** with types and constraints
-- **All parameters** documented with descriptions
-- **Working examples** for every command
-- **Error codes** (-1 to -507) categorized
-- **V20 enhanced commands** with schedule tables
-- **Streaming protocol details** (RTSP, RTMP, FLV)
-
-## Go SDK
-
-A production-ready Go SDK is available in [sdk/go/reolink/](sdk/go/reolink/). See the [SDK README](sdk/go/reolink/README.md) for:
-- Installation instructions
-- Complete API documentation
-- Usage examples
-- Testing guide
-
-The SDK includes working examples in [sdk/go/reolink/examples/](sdk/go/reolink/examples/) demonstrating common use cases.
-
-## API Basics
-
-### Base URL
-```
-http://<camera-ip>/cgi-bin/api.cgi
-```
-
-### Authentication
-
-Two methods are supported:
-
-1. **Token-based (Recommended)**: Login once, use token for subsequent requests (3600 second lease)
-2. **Basic Auth**: Include credentials in each request URL
-
-### Request Format
-All requests are POST with JSON body:
-```json
-[
-  {
-    "cmd": "CommandName",
-    "param": {
-      "Parameter": {
-        "field": "value"
-      }
-    },
-    "token": "your-token-here"
-  }
-]
-```
-
-### Response Format
-```json
-[
-  {
-    "cmd": "CommandName",
-    "code": 0,
-    "value": {
-      "Data": {
-        "field": "value"
-      }
-    }
-  }
-]
-```
-
-### Common Error Codes
-
-- `0`: Success
-- `-1`: Unknown error
-- `-2`: Invalid parameter
-- `-3`: Operation failed
-- `-6`: Invalid username or password
-- `-8`: Invalid token
-- `-16`: Need to login first
-
-See the [OpenAPI spec](docs/reolink-camera-api-openapi.yaml) for complete error code documentation (50+ codes).
-
-## Key Features
-
-### Schedule Tables
-V20 commands support detailed schedule tables with alarm types:
-- **MD**: Motion detection
-- **TIMING**: Scheduled recording
-- **AI_PEOPLE**: AI people detection
-- **AI_VEHICLE**: AI vehicle detection
-- **AI_DOG_CAT**: AI pet detection
-
-Each schedule is a 168-character string (7 days × 24 hours).
-
-### Motion Detection Scope
-Configurable detection zones using grid tables:
-- 80×60 grid (4800 characters)
-- 80×45 grid (3600 characters)
-
-### PTZ Operations
-19 different PTZ operation types including:
-- Up, Down, Left, Right
-- Zoom In/Out, Focus In/Out
-- Auto, Stop, Patrol, Preset
-- And more...
-
-## 🔧 Using with Popular Tools
-
-### Postman
-
-1. Open Postman
-2. Click **Import**
-3. Select **Link** and paste: `https://mosleyit.github.io/reolink_api_wrapper/reolink-camera-api-openapi.yaml`
-4. Postman will create a collection with all endpoints
-
-### Insomnia
-
-1. Open Insomnia
-2. Click **Create** → **Import From** → **URL**
-3. Paste: `https://mosleyit.github.io/reolink_api_wrapper/reolink-camera-api-openapi.yaml`
-4. All endpoints will be imported
-
-### VS Code (REST Client Extension)
-
-1. Install the REST Client extension
-2. Create a `.http` file
-3. Use the OpenAPI spec as reference for endpoints
-
-### Paw / RapidAPI
-
-Import the OpenAPI YAML file directly into these tools for a complete API client.
-
-## 📊 Statistics
-
-- **Total Endpoints**: 110+
-- **Total Lines (OpenAPI)**: 8,898
-- **Error Codes Documented**: 50+
-- **Command Categories**: 10+
-- **API Coverage**: 100%
-- **Go SDK**: Production-ready with 60%+ test coverage
-
-## 📌 Version
-
-- **API Version**: 8
-- **Documentation Date**: 2023-4
-- **OpenAPI Version**: 3.0.3
-- **Documentation URL**: https://mosleyit.github.io/reolink_api_wrapper/
+Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
-This documentation is based on the official Reolink Camera HTTP API User Guide. Please refer to Reolink's terms of service for API usage.
-
-## Contributing
-
-Contributions are welcome! If you find any issues or have improvements, please open an issue or pull request.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Acknowledgments
 
-- Original documentation by Reolink
-- Converted to OpenAPI 3.0.3 specification for developer convenience
+- Based on the official Reolink Camera HTTP API User Guide (Version 8)
+- OpenAPI specification: [`docs/reolink-camera-api-openapi.yaml`](docs/reolink-camera-api-openapi.yaml)
 
+## Support
+
+- **Issues**: [GitHub Issues](https://github.com/mosleyit/reolink_api_wrapper/issues)
+- **Documentation**: [pkg.go.dev](https://pkg.go.dev/github.com/mosleyit/reolink_api_wrapper)
+- **API Spec**: [OpenAPI Documentation](https://mosleyit.github.io/reolink_api_wrapper/)
+
+## Version History
+
+See [CHANGELOG.md](CHANGELOG.md) for version history and migration guides.
+
+## Related Projects
+
+- **OpenAPI Specification**: Complete API documentation in [`docs/`](docs/)
+- **Legacy SDK**: Previous version available in [`sdk/go/reolink/`](sdk/go/reolink/) (deprecated)
