@@ -124,18 +124,60 @@ client := reolink.NewClient("192.168.1.100",
 )
 ```
 
-## Testing
+## Development
 
-Run the test suite:
+### Quick Start with Make
+
+This project includes a comprehensive Makefile for common development tasks:
 
 ```bash
-go test ./...
+# Show all available commands
+make help
+
+# Run tests
+make test
+
+# Build all examples
+make build
+
+# Run linter
+make lint
+
+# Format code
+make fmt
+
+# Run all checks (format, lint, test) and build
+make all
 ```
 
-Run tests with coverage:
+### Common Make Targets
+
+| Target | Description |
+|--------|-------------|
+| `make test` | Run all tests |
+| `make test-coverage` | Run tests with coverage report |
+| `make build` | Build all example binaries |
+| `make lint` | Run linter |
+| `make fmt` | Format all code |
+| `make clean` | Remove built binaries and coverage files |
+| `make verify` | Run all verification checks (CI-friendly) |
+| `make install-tools` | Install development tools |
+
+Run `make help` to see all 37 available targets.
+
+### Manual Testing
+
+You can also run tests directly with Go:
 
 ```bash
+# Run all tests
+go test ./...
+
+# Run tests with coverage
 go test -cover ./...
+
+# Run tests with race detector
+go test -race ./...
 ```
 
 ## Hardware Compatibility
