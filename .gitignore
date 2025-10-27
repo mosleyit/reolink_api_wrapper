@@ -13,3 +13,10 @@ Thumbs.db
 *.log
 *.tmp
 
+# Go
+*.test
+*.out
+coverage.txt
+coverage.html
+*.prof
+vendor/

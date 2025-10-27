@@ -157,13 +157,13 @@ info:
     name: Proprietary
   
 servers:
-  - url: https://{camera_ip}/cgi-bin
+  - url: https://{camera_ip}
     description: HTTPS endpoint (recommended)
     variables:
       camera_ip:
         default: 192.168.1.100
         description: IP address of the camera or NVR
-  - url: http://{camera_ip}/cgi-bin
+  - url: http://{camera_ip}
     description: HTTP endpoint (must be enabled in camera settings)
     variables:
       camera_ip:

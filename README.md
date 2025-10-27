@@ -14,33 +14,60 @@ reolink_api_wrapper/
 │   ├── reolink-camera-api-openapi.yaml    # Complete OpenAPI 3.0.3 spec (8,898 lines)
 │   ├── api_guide.txt                       # Text conversion of PDF (20,717 lines)
 │   └── reolink-camera-http-api-user-guide-v8.pdf  # Original PDF
-├── examples/                      # Language-specific examples
-│   ├── python/                    # Python examples and guides
-│   ├── go/                        # Go examples and guides
-│   ├── javascript/                # JavaScript/TypeScript examples
-│   └── java/                      # Java examples and guides
+├── sdk/                           # SDK implementations
+│   └── go/reolink/                # Production-ready Go SDK
+│       ├── README.md              # SDK documentation
+│       └── examples/              # Working Go examples
 └── README.md                      # This file
 ```
 
 ## Quick Start
 
-### 1. Choose Your Language
+### Option 1: Use the Go SDK (Recommended)
 
-- **[Python](examples/python/)** - Simple and powerful, great for scripting
-- **[Go](examples/go/)** - High performance, excellent for services
-- **[JavaScript/TypeScript](examples/javascript/)** - Perfect for web apps and Node.js
-- **[Java](examples/java/)** - Enterprise-ready, Spring Boot compatible
+A production-ready Go SDK is available:
 
-### 2. Generate a Client (Recommended)
+```bash
+go get github.com/mosleyit/reolink_api_wrapper/sdk/go/reolink
+```
 
-Use OpenAPI Generator to create a type-safe client in your language:
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "log"
+    "github.com/mosleyit/reolink_api_wrapper/sdk/go/reolink"
+)
+
+func main() {
+    client := reolink.NewClient("192.168.1.100",
+        reolink.WithCredentials("admin", "password"))
+
+    ctx := context.Background()
+    if err := client.Login(ctx); err != nil {
+        log.Fatal(err)
+    }
+    defer client.Logout(ctx)
+
+    info, err := client.System.GetDeviceInfo(ctx)
+    if err != nil {
+        log.Fatal(err)
+    }
+    fmt.Printf("Camera: %s (Firmware: %s)\n", info.Model, info.FirmVer)
+}
+```
+
+See [sdk/go/reolink/README.md](sdk/go/reolink/README.md) for complete documentation.
+
+### Option 2: Generate a Client from OpenAPI Spec
+
+Use OpenAPI Generator to create a client in your language:
 
 ```bash
 # Python
 openapi-generator-cli generate -i docs/reolink-camera-api-openapi.yaml -g python -o ./python-client
-
-# Go
-openapi-generator-cli generate -i docs/reolink-camera-api-openapi.yaml -g go -o ./go-client
 
 # TypeScript/Axios
 openapi-generator-cli generate -i docs/reolink-camera-api-openapi.yaml -g typescript-axios -o ./ts-client
@@ -49,9 +76,9 @@ openapi-generator-cli generate -i docs/reolink-camera-api-openapi.yaml -g typesc
 openapi-generator-cli generate -i docs/reolink-camera-api-openapi.yaml -g java -o ./java-client
 ```
 
-### 3. Or Use Manual Implementation
+### Option 3: Manual Implementation
 
-Each language directory contains ready-to-use example code. See the README in each directory for details.
+Use the OpenAPI specification to implement your own client, or see the [Go SDK examples](sdk/go/reolink/examples/) for reference implementations.
 
 ## Features
 
@@ -158,85 +185,15 @@ The [`docs/reolink-camera-api-openapi.yaml`](docs/reolink-camera-api-openapi.yam
 - **V20 enhanced commands** with schedule tables
 - **Streaming protocol details** (RTSP, RTMP, FLV)
 
-## Language-Specific Examples
+## Go SDK
 
-### Python
+A production-ready Go SDK is available in [sdk/go/reolink/](sdk/go/reolink/). See the [SDK README](sdk/go/reolink/README.md) for:
+- Installation instructions
+- Complete API documentation
+- Usage examples
+- Testing guide
 
-```python
-from reolink_camera import ReolinkCamera
-
-camera = ReolinkCamera("192.168.1.100", "admin", "password")
-camera.login()
-
-# Get device info
-info = camera.get_device_info()
-print(info)
-
-# Get snapshot
-snapshot = camera.get_snapshot()
-with open("snapshot.jpg", "wb") as f:
-    f.write(snapshot)
-
-camera.logout()
-```
-
-See [examples/python/](examples/python/) for complete examples.
-
-### Go
-
-```go
-package main
-
-import "github.com/mosleyit/reolink_api_wrapper/examples/go"
-
-func main() {
-    camera := NewReolinkCamera("192.168.1.100", "admin", "password")
-    camera.Login()
-
-    info, _ := camera.GetDeviceInfo()
-    fmt.Printf("Device: %+v\n", info)
-
-    camera.Logout()
-}
-```
-
-See [examples/go/](examples/go/) for complete examples.
-
-### JavaScript/TypeScript
-
-```javascript
-const ReolinkCamera = require('./reolink-camera');
-
-const camera = new ReolinkCamera('192.168.1.100', 'admin', 'password');
-
-async function main() {
-  await camera.login();
-
-  const info = await camera.getDeviceInfo();
-  console.log(info);
-
-  await camera.logout();
-}
-
-main();
-```
-
-See [examples/javascript/](examples/javascript/) for complete examples.
-
-### Java
-
-```java
-ReolinkCamera camera = new ReolinkCamera("192.168.1.100", "admin", "password");
-
-camera.login();
-
-Map<String, Object> info = camera.getDeviceInfo();
-System.out.println(info);
-
-camera.logout();
-```
-
-See [examples/java/](examples/java/) for complete examples.
+The SDK includes working examples in [sdk/go/reolink/examples/](sdk/go/reolink/examples/) demonstrating common use cases.
 
 ## API Basics
 
@@ -351,8 +308,8 @@ Import the OpenAPI YAML file directly into these tools for a complete API client
 - **Total Lines (OpenAPI)**: 8,898
 - **Error Codes Documented**: 50+
 - **Command Categories**: 10+
-- **Completeness**: 100%
-- **Languages Supported**: Python, Go, JavaScript/TypeScript, Java
+- **API Coverage**: 100%
+- **Go SDK**: Production-ready with 60%+ test coverage
 
 ## 📌 Version
 
