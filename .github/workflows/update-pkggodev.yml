@@ -10,6 +10,11 @@ jobs:
   update-pkggodev:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
       - name: Get version
         id: version
         run: |
