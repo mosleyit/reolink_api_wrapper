@@ -101,8 +101,8 @@
 //
 // Get streaming URLs for RTSP, RTMP, or FLV:
 //
-//	// RTSP URL for main stream
-//	rtspURL := client.Streaming.GetRTSPURL(reolink.StreamMain, 1)
+//	// RTSP URL for main stream (channel 0)
+//	rtspURL := client.Streaming.GetRTSPURL(reolink.StreamMain, 0)
 //	fmt.Printf("RTSP: %s\n", rtspURL)
 //
 //	// RTMP URL for sub stream

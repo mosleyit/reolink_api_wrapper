@@ -11,11 +11,12 @@ type StreamingAPI struct {
 
 // GetRTSPURL generates an RTSP URL for the specified stream type and channel
 //
-// Channel numbers start from 1 for RTSP URLs (e.g., 1, 2, 3)
+// The channel parameter is 0-based (e.g., 0, 1, 2) and will be converted to
+// the 1-based channel numbers used in RTSP URLs (e.g., 01, 02, 03).
 //
 // Example:
 //
-//	url := client.Streaming.GetRTSPURL(reolink.StreamMain, 1)
+//	url := client.Streaming.GetRTSPURL(reolink.StreamMain, 0)
 //	// rtsp://admin:password@192.168.1.100:554/Preview_01_main
 func (s *StreamingAPI) GetRTSPURL(streamType StreamType, channel int) string {
 	s.client.logger.Debug("generating RTSP URL: stream=%s channel=%d", streamType, channel)
@@ -24,7 +25,8 @@ func (s *StreamingAPI) GetRTSPURL(streamType StreamType, channel int) string {
 	port := 554
 
 	// Format channel with leading zero (01, 02, etc.)
-	channelStr := fmt.Sprintf("%02d", channel)
+	// RTSP uses 1-based channel numbers, so add 1 to the 0-based channel parameter
+	channelStr := fmt.Sprintf("%02d", channel+1)
 
 	// Build URL with credentials
 	var url string
