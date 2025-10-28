@@ -159,8 +159,8 @@ func main() {
 	// Test 9: Streaming URLs
 	fmt.Println("\n--- Test 9: Streaming URLs ---")
 	fmt.Println("✅ Generated Streaming URLs:")
-	fmt.Printf("   RTSP Main:     %s\n", client.Streaming.GetRTSPURL(reolink.StreamMain, 1))
-	fmt.Printf("   RTSP Sub:      %s\n", client.Streaming.GetRTSPURL(reolink.StreamSub, 1))
+	fmt.Printf("   RTSP Main:     %s\n", client.Streaming.GetRTSPURL(reolink.StreamMain, 0))
+	fmt.Printf("   RTSP Sub:      %s\n", client.Streaming.GetRTSPURL(reolink.StreamSub, 0))
 	fmt.Printf("   RTMP Main:     %s\n", client.Streaming.GetRTMPURL(reolink.StreamMain, 0))
 	fmt.Printf("   FLV Main:      %s\n", client.Streaming.GetFLVURL(reolink.StreamMain, 0))
 

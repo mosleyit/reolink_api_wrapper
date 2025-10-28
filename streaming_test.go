@@ -14,22 +14,28 @@ func TestStreamingAPI_GetRTSPURL(t *testing.T) {
 		expected   string
 	}{
 		{
-			name:       "Main stream channel 1",
-			channel:    1,
+			name:       "Main stream channel 0",
+			channel:    0,
 			streamType: StreamMain,
 			expected:   "rtsp://admin:password@192.168.1.100:554/Preview_01_main",
 		},
 		{
-			name:       "Sub stream channel 1",
-			channel:    1,
+			name:       "Sub stream channel 0",
+			channel:    0,
 			streamType: StreamSub,
 			expected:   "rtsp://admin:password@192.168.1.100:554/Preview_01_sub",
 		},
 		{
-			name:       "Main stream channel 2",
-			channel:    2,
+			name:       "Main stream channel 1",
+			channel:    1,
 			streamType: StreamMain,
 			expected:   "rtsp://admin:password@192.168.1.100:554/Preview_02_main",
+		},
+		{
+			name:       "Ext stream channel 2",
+			channel:    2,
+			streamType: StreamExt,
+			expected:   "rtsp://admin:password@192.168.1.100:554/Preview_03_ext",
 		},
 	}
 
