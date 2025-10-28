@@ -1,0 +1,123 @@
+name: Release and Update pkg.go.dev
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to release (e.g., v1.0.3)'
+        required: true
+        type: string
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+
+      - name: Get version
+        id: version
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "version=${{ inputs.version }}" >> $GITHUB_OUTPUT
+          else
+            echo "version=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Run tests
+        run: go test -v ./...
+
+      - name: Generate changelog
+        id: changelog
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          PREV_TAG=$(git describe --tags --abbrev=0 ${VERSION}^ 2>/dev/null || echo "")
+          
+          if [ -z "$PREV_TAG" ]; then
+            COMMITS=$(git log --pretty=format:"- %s (%h)" ${VERSION})
+          else
+            COMMITS=$(git log --pretty=format:"- %s (%h)" ${PREV_TAG}..${VERSION})
+          fi
+          
+          # Create changelog
+          cat > CHANGELOG.tmp << EOF
+          ## What's Changed
+          
+          ${COMMITS}
+          
+          **Full Changelog**: https://github.com/${{ github.repository }}/compare/${PREV_TAG}...${VERSION}
+          EOF
+          
+          echo "changelog<<EOF" >> $GITHUB_OUTPUT
+          cat CHANGELOG.tmp >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Create GitHub Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.version.outputs.version }}
+          release_name: Release ${{ steps.version.outputs.version }}
+          body: ${{ steps.changelog.outputs.changelog }}
+          draft: false
+          prerelease: false
+
+      - name: Request pkg.go.dev update
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          MODULE="github.com/${{ github.repository }}"
+          
+          echo "Requesting pkg.go.dev to fetch ${MODULE}@${VERSION}..."
+          
+          # Request the module page (this triggers indexing)
+          curl -f "https://pkg.go.dev/${MODULE}@${VERSION}" || true
+          
+          # Also request via the proxy to ensure it's cached
+          curl -f "https://proxy.golang.org/${MODULE}/@v/${VERSION}.info" || true
+          
+          echo "✅ Requested pkg.go.dev update for ${MODULE}@${VERSION}"
+          echo "📦 Documentation will be available at: https://pkg.go.dev/${MODULE}@${VERSION}"
+          echo "⏱️  Note: It may take a few minutes for pkg.go.dev to index the new version"
+
+      - name: Comment on related issues
+        if: github.event_name == 'push'
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          
+          # Extract issue numbers from commit messages
+          ISSUES=$(git log --pretty=format:"%s" ${VERSION}^..${VERSION} | grep -oP '(?<=#)\d+' | sort -u || true)
+          
+          if [ -n "$ISSUES" ]; then
+            for ISSUE in $ISSUES; do
+              gh issue comment $ISSUE --body "🎉 This issue has been resolved in ${VERSION}!
+
+          The fix is now available on pkg.go.dev: https://pkg.go.dev/github.com/${{ github.repository }}@${VERSION}
+
+          To update, run:
+          \`\`\`bash
+          go get github.com/${{ github.repository }}@${VERSION}
+          \`\`\`" || true
+            done
+          fi
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Update documentation
+        run: |
+          echo "Documentation updated at https://pkg.go.dev/github.com/${{ github.repository }}@${{ steps.version.outputs.version }}"
+

@@ -1,0 +1,119 @@
+name: Auto Version Bump
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  auto-version:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+
+      - name: Determine version bump
+        id: bump
+        run: |
+          # Get the latest tag
+          LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+          echo "Latest tag: $LATEST_TAG"
+          
+          # Parse version
+          VERSION=${LATEST_TAG#v}
+          MAJOR=$(echo $VERSION | cut -d. -f1)
+          MINOR=$(echo $VERSION | cut -d. -f2)
+          PATCH=$(echo $VERSION | cut -d. -f3)
+          
+          # Determine bump type from PR labels or title
+          PR_TITLE="${{ github.event.pull_request.title }}"
+          PR_LABELS="${{ join(github.event.pull_request.labels.*.name, ',') }}"
+          
+          BUMP_TYPE="patch"
+          
+          # Check for breaking changes
+          if echo "$PR_TITLE" | grep -qiE "^(breaking|major):"; then
+            BUMP_TYPE="major"
+          elif echo "$PR_LABELS" | grep -qi "breaking"; then
+            BUMP_TYPE="major"
+          # Check for features
+          elif echo "$PR_TITLE" | grep -qiE "^(feat|feature|minor):"; then
+            BUMP_TYPE="minor"
+          elif echo "$PR_LABELS" | grep -qi "enhancement"; then
+            BUMP_TYPE="minor"
+          # Default to patch for fixes
+          elif echo "$PR_TITLE" | grep -qiE "^(fix|patch|bug):"; then
+            BUMP_TYPE="patch"
+          elif echo "$PR_LABELS" | grep -qi "bug"; then
+            BUMP_TYPE="patch"
+          fi
+          
+          echo "Bump type: $BUMP_TYPE"
+          
+          # Calculate new version
+          if [ "$BUMP_TYPE" = "major" ]; then
+            MAJOR=$((MAJOR + 1))
+            MINOR=0
+            PATCH=0
+          elif [ "$BUMP_TYPE" = "minor" ]; then
+            MINOR=$((MINOR + 1))
+            PATCH=0
+          else
+            PATCH=$((PATCH + 1))
+          fi
+          
+          NEW_VERSION="v${MAJOR}.${MINOR}.${PATCH}"
+          echo "New version: $NEW_VERSION"
+          
+          echo "version=$NEW_VERSION" >> $GITHUB_OUTPUT
+          echo "bump_type=$BUMP_TYPE" >> $GITHUB_OUTPUT
+
+      - name: Run tests
+        run: go test -v ./...
+
+      - name: Create and push tag
+        run: |
+          VERSION="${{ steps.bump.outputs.version }}"
+          BUMP_TYPE="${{ steps.bump.outputs.bump_type }}"
+          PR_NUMBER="${{ github.event.pull_request.number }}"
+          PR_TITLE="${{ github.event.pull_request.title }}"
+          
+          # Configure git
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # Create annotated tag
+          git tag -a "$VERSION" -m "Release $VERSION - $BUMP_TYPE bump
+
+          Merged PR #$PR_NUMBER: $PR_TITLE
+          
+          This release was automatically created by the auto-version workflow."
+          
+          # Push tag
+          git push origin "$VERSION"
+          
+          echo "✅ Created and pushed tag $VERSION"
+
+      - name: Create release notes
+        run: |
+          VERSION="${{ steps.bump.outputs.version }}"
+          
+          echo "🎉 Version $VERSION has been released!"
+          echo "📦 View on pkg.go.dev: https://pkg.go.dev/github.com/${{ github.repository }}@$VERSION"
+          echo ""
+          echo "To update your project:"
+          echo "  go get github.com/${{ github.repository }}@$VERSION"
+

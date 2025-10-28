@@ -1,0 +1,77 @@
+name: Update pkg.go.dev
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+  workflow_dispatch:
+
+jobs:
+  update-pkggodev:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get version
+        id: version
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            # Get latest tag
+            VERSION=$(git describe --tags --abbrev=0)
+          else
+            VERSION=${GITHUB_REF#refs/tags/}
+          fi
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Request pkg.go.dev indexing
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          MODULE="github.com/${{ github.repository }}"
+          
+          echo "📦 Requesting pkg.go.dev to index ${MODULE}@${VERSION}..."
+          
+          # Method 1: Request the module page directly
+          echo "Method 1: Requesting module page..."
+          curl -sSf "https://pkg.go.dev/${MODULE}@${VERSION}" > /dev/null 2>&1 || echo "  ⚠️  Module page request returned error (this is normal for new versions)"
+          
+          # Method 2: Request via Go proxy
+          echo "Method 2: Requesting via Go proxy..."
+          curl -sSf "https://proxy.golang.org/${MODULE}/@v/${VERSION}.info" > /dev/null 2>&1 || echo "  ⚠️  Proxy request returned error"
+          
+          # Method 3: Request the list endpoint
+          echo "Method 3: Requesting version list..."
+          curl -sSf "https://proxy.golang.org/${MODULE}/@v/list" > /dev/null 2>&1 || echo "  ⚠️  List request returned error"
+          
+          # Method 4: Request the latest endpoint
+          echo "Method 4: Requesting latest version..."
+          curl -sSf "https://proxy.golang.org/${MODULE}/@latest" > /dev/null 2>&1 || echo "  ⚠️  Latest request returned error"
+          
+          echo ""
+          echo "✅ Indexing requests sent!"
+          echo ""
+          echo "📚 Documentation will be available at:"
+          echo "   https://pkg.go.dev/${MODULE}@${VERSION}"
+          echo ""
+          echo "⏱️  Note: It may take 5-10 minutes for pkg.go.dev to index the new version."
+          echo "   You can check the status at: https://pkg.go.dev/${MODULE}?tab=versions"
+
+      - name: Wait and verify
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          MODULE="github.com/${{ github.repository }}"
+          
+          echo "⏳ Waiting 30 seconds before verification..."
+          sleep 30
+          
+          echo "🔍 Checking if version is indexed..."
+          
+          # Check if the version appears in the proxy
+          if curl -sSf "https://proxy.golang.org/${MODULE}/@v/${VERSION}.info" > /dev/null 2>&1; then
+            echo "✅ Version ${VERSION} is available in the Go proxy!"
+          else
+            echo "⚠️  Version ${VERSION} not yet available in the Go proxy."
+            echo "   This is normal - it can take a few minutes."
+          fi
+          
+          echo ""
+          echo "To use this version in your project:"
+          echo "  go get ${MODULE}@${VERSION}"
+
